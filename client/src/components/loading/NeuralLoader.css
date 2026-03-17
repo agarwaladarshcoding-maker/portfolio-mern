@@ -1,0 +1,143 @@
+/* ============================================================
+   NeuralLoader.css — Styles for the Opening Animation
+   ============================================================ */
+
+/* Full-screen overlay — covers everything until complete */
+.neural-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Fade OUT when the animation completes.
+     The parent App.jsx adds data-exiting="true" which triggers this. */
+  transition: opacity 800ms var(--ease-in-expo);
+}
+
+.neural-loader[data-exiting="true"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Canvas fills the entire screen */
+.neural-loader__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Overlay UI ───────────────────────────────────────────── */
+/* All text/UI overlays sit above the canvas */
+.neural-loader__overlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none; /* Let mouse events pass through to canvas */
+}
+
+/* ── Top-left system ID ───────────────────────────────────── */
+.neural-loader__sys-id {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  animation: fadeDown 600ms var(--ease-out-expo) 200ms both;
+}
+
+.neural-loader__label {
+  font-size: var(--text-xs);
+  letter-spacing: 0.2em;
+  color: var(--color-text-secondary);
+  padding: 2px 6px;
+  border: 1px solid var(--color-border);
+}
+
+.neural-loader__value {
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+}
+
+/* ── Center status text ───────────────────────────────────── */
+.neural-loader__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  animation: fadeIn 800ms var(--ease-out-expo) 400ms both;
+}
+
+.neural-loader__status-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  letter-spacing: 0.2em;
+  color: var(--color-text-primary);
+}
+
+/* Pulsing green dot before the status text */
+.neural-loader__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: pulseGlow 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.neural-loader__subtext {
+  font-size: var(--text-xs);
+  letter-spacing: 0.25em;
+  color: var(--color-text-secondary);
+  animation: blink 1.2s step-end infinite;
+}
+
+/* ── Bottom progress bar ──────────────────────────────────── */
+.neural-loader__footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  animation: fadeUp 600ms var(--ease-out-expo) 300ms both;
+}
+
+.neural-loader__progress-bar {
+  width: 100%;
+  height: 1px;
+  background: var(--color-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.neural-loader__progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--color-accent);
+  /* The progress fill grows over the animation duration.
+     CSS animation synchronized with the JS CONFIG.ANIMATION_DURATION */
+  animation: fillBar 3.2s var(--ease-out-quart) 0.3s both;
+  --fill-width: 100%;
+  box-shadow: var(--glow-accent);
+}
+
+.neural-loader__footer-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  color: var(--color-text-secondary);
+}
+
+.neural-loader__percent {
+  color: var(--color-accent);
+}

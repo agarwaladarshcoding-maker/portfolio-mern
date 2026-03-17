@@ -1,0 +1,196 @@
+/* ── Skills ──────────────────────────────────────────────── */
+.skills { border-bottom: 1px solid var(--navy-500); }
+
+.skills__header {
+  margin-bottom: var(--sp-12);
+}
+
+.skills__title {
+  font-family: var(--font-serif);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--ink-100);
+  margin-bottom: var(--sp-4);
+}
+
+.skills__title-em {
+  font-style: italic;
+  color: var(--amber-500);
+}
+
+.skills__subtitle {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink-300);
+  letter-spacing: 0.08em;
+}
+
+/* ── Layout ──────────────────────────────────────────────── */
+.skills__layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--sp-12);
+  align-items: start;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────── */
+.skills__sidebar {
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 80px;
+}
+
+.skills__tab {
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-left: 2px solid transparent;
+  padding: var(--sp-3) var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  color: var(--ink-300);
+  transition: all var(--duration-fast);
+  text-transform: uppercase;
+}
+
+.skills__tab:hover {
+  color: var(--ink-100);
+  border-left-color: var(--navy-400);
+}
+
+.skills__tab--active {
+  color: var(--amber-400);
+  border-left-color: var(--amber-500);
+  background: var(--amber-dim);
+}
+
+.skills__quote {
+  margin-top: var(--sp-8);
+  padding: var(--sp-4) var(--sp-4);
+  border-left: 2px solid var(--navy-500);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-sm);
+  color: var(--ink-300);
+  line-height: 1.7;
+}
+
+/* ── Bars ────────────────────────────────────────────────── */
+.skills__bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-7);
+  padding-top: var(--sp-1);
+}
+
+.skill-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.skill-row__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.skill-row__name {
+  font-size: var(--text-md);
+  color: var(--ink-100);
+  font-weight: 400;
+  font-family: var(--font-sans);
+}
+
+.skill-row__num {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+  letter-spacing: 0.1em;
+}
+
+.skill-row__track {
+  height: 1px;
+  background: var(--navy-500);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-row__fill {
+  position: absolute;
+  left: 0; top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--amber-500), var(--amber-300));
+  width: 0%;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .skills__layout { grid-template-columns: 1fr; }
+  .skills__sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: static;
+    gap: var(--sp-2);
+  }
+  .skills__tab {
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    padding: var(--sp-2) var(--sp-3);
+  }
+  .skills__tab--active {
+    border-bottom-color: var(--amber-500);
+    border-left: none;
+  }
+  .skills__quote { display: none; }
+}
+
+
+/* ── Append these to the bottom of SkillsMatrix.css ──────── */
+
+/* The row itself — slightly dimmed vs normal rows */
+.skill-row--learning { opacity: 0.8; }
+
+/* "learning" badge replacing the number */
+.skill-row__learning-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--green);
+  border: 1px solid var(--green);
+  padding: 1px 6px;
+}
+
+/* pulsing green dot inside the badge */
+.skill-row__learning-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* animated dashed line instead of a filled bar */
+.skill-row__learning-fill {
+  height: 100%;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--green) 0px,
+    var(--green) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  opacity: 0.3;
+  animation: shimmer 2s linear infinite;
+  background-size: 24px 100%;
+}

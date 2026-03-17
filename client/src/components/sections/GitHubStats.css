@@ -1,0 +1,258 @@
+/* ── GitHub Stats Section ────────────────────────────────── */
+.ghstats { border-bottom: 1px solid var(--navy-500); }
+
+/* ── Header ──────────────────────────────────────────────── */
+.ghstats__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--sp-8);
+  margin-bottom: var(--sp-10);
+}
+
+.ghstats__title {
+  font-family: var(--font-serif);
+  font-weight: 900;
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--ink-100);
+  margin-bottom: var(--sp-3);
+}
+
+.ghstats__title-em {
+  font-style: italic;
+  color: var(--amber-500);
+}
+
+.ghstats__sub {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-300);
+  letter-spacing: 0.15em;
+}
+
+.ghstats__profile-link {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--amber-500);
+  letter-spacing: 0.1em;
+  transition: color var(--duration-fast);
+  flex-shrink: 0;
+  padding-bottom: var(--sp-1);
+}
+
+.ghstats__profile-link:hover { color: var(--amber-300); }
+
+/* ── Stat boxes ──────────────────────────────────────────── */
+.ghstats__stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--navy-500);
+  border: 1px solid var(--navy-500);
+  margin-bottom: var(--sp-8);
+}
+
+.gh-statbox {
+  background: var(--navy-800);
+  padding: var(--sp-5) var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  transition: background var(--duration-fast);
+}
+
+.gh-statbox:hover { background: var(--navy-700); }
+
+.gh-statbox__n {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-3xl);
+  color: var(--amber-500);
+  line-height: 1;
+}
+
+.gh-statbox__l {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-300);
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+}
+
+/* ── Divider ─────────────────────────────────────────────── */
+.ghstats__divider {
+  height: 1px;
+  background: linear-gradient(90deg, var(--amber-500) 0%, var(--navy-500) 40%, transparent 100%);
+  margin: var(--sp-8) 0;
+}
+
+/* ── Grid ────────────────────────────────────────────────── */
+.ghstats__grid-wrap {
+  overflow-x: auto;
+  padding-bottom: var(--sp-2);
+}
+
+.ghstats__grid-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-3);
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+}
+
+.ghstats__grid-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-300);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.ghstats__legend {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+
+.ghstats__legend-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+  letter-spacing: 0.1em;
+}
+
+/* ── Contribution grid ───────────────────────────────────── */
+.gh-grid {
+  display: flex;
+  gap: 3px;
+  min-width: max-content;
+}
+
+.gh-grid__col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.gh-cell {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  transition: opacity var(--duration-fast);
+}
+
+.gh-cell:hover { opacity: 0.75; }
+
+.gh-cell--0 { background: var(--navy-700); }
+.gh-cell--1 { background: #1a3a1a; }
+.gh-cell--2 { background: #1f6b2a; }
+.gh-cell--3 { background: #2da042; }
+.gh-cell--4 { background: #3dd668; }
+
+/* ── Languages ───────────────────────────────────────────── */
+.ghstats__langs-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-300);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: var(--sp-4);
+}
+
+.ghstats__langs-bar {
+  display: flex;
+  height: 8px;
+  border-radius: 0;
+  overflow: hidden;
+  gap: 2px;
+  margin-bottom: var(--sp-4);
+}
+
+.ghstats__lang-segment {
+  height: 100%;
+  transition: opacity var(--duration-fast);
+}
+
+.ghstats__lang-segment:nth-child(1) { background: #4a9eff; }
+.ghstats__lang-segment:nth-child(2) { background: #a78bfa; }
+.ghstats__lang-segment:nth-child(3) { background: #34d399; }
+.ghstats__lang-segment:nth-child(4) { background: #fbbf24; }
+.ghstats__lang-segment:nth-child(5) { background: #f87171; }
+.ghstats__lang-segment:nth-child(6) { background: #60a5fa; }
+.ghstats__lang-segment:nth-child(7) { background: #c084fc; }
+.ghstats__lang-segment:nth-child(8) { background: #4ade80; }
+
+.ghstats__lang-segment:hover { opacity: 0.75; }
+
+.ghstats__langs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-5);
+}
+
+.ghstats__lang-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.ghstats__lang-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ghstats__lang-name {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-200);
+  letter-spacing: 0.08em;
+}
+
+.ghstats__lang-pct {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+  letter-spacing: 0.06em;
+}
+
+/* ── Loading / Error ─────────────────────────────────────── */
+.ghstats__loading {
+  display: flex;
+  gap: var(--sp-2);
+  padding: var(--sp-10) 0;
+}
+
+.ghstats__loading span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--amber-500);
+  animation: loadingDot 1.2s ease-in-out infinite;
+}
+.ghstats__loading span:nth-child(2) { animation-delay: 0.15s; }
+.ghstats__loading span:nth-child(3) { animation-delay: 0.30s; }
+
+.ghstats__error {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--red);
+  padding: var(--sp-4) var(--sp-5);
+  border-left: 3px solid var(--red);
+  background: #e05c5c0d;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .ghstats__stats { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .ghstats__stats { grid-template-columns: repeat(2, 1fr); }
+  .ghstats__header { flex-direction: column; align-items: flex-start; }
+}

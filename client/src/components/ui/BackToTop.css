@@ -1,0 +1,36 @@
+/* ── Back to Top ─────────────────────────────────────────── */
+.btt {
+  position: fixed;
+  bottom: var(--sp-8);
+  right: var(--sp-8);
+  z-index: 500;
+  width: 40px;
+  height: 40px;
+  background: var(--navy-800);
+  border: 1px solid var(--navy-500);
+  color: var(--ink-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out),
+              background var(--duration-fast),
+              border-color var(--duration-fast),
+              color var(--duration-fast);
+}
+
+.btt--visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.btt:hover {
+  background: var(--amber-500);
+  border-color: var(--amber-500);
+  color: var(--navy-900);
+}

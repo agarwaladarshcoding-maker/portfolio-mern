@@ -1,0 +1,98 @@
+/* ── Now Teaser Strip ────────────────────────────────────── */
+.now-teaser {
+  border-top: 1px solid var(--navy-500);
+  border-bottom: 1px solid var(--navy-500);
+  background: var(--navy-800);
+  padding: var(--sp-6) 0;
+}
+
+.now-teaser__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-8);
+  flex-wrap: wrap;
+}
+
+/* ── Left side ───────────────────────────────────────────── */
+.now-teaser__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.25em;
+  color: var(--ink-300);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-4);
+}
+
+.now-teaser__pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.now-teaser__items {
+  display: flex;
+  gap: var(--sp-10);
+  flex-wrap: wrap;
+}
+
+.now-teaser__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.now-teaser__item-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.now-teaser__item-value {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--ink-100);
+  font-weight: 400;
+}
+
+/* ── CTA ─────────────────────────────────────────────────── */
+.now-teaser__cta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--amber-500);
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+  transition: gap var(--duration-fast);
+  border: 1px solid var(--amber-mid);
+  padding: var(--sp-3) var(--sp-6);
+  background: var(--amber-dim);
+}
+
+.now-teaser__cta:hover {
+  gap: var(--sp-5);
+  background: var(--amber-mid);
+}
+
+.now-teaser__cta-arrow {
+  transition: transform var(--duration-fast);
+}
+
+.now-teaser__cta:hover .now-teaser__cta-arrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 640px) {
+  .now-teaser__items { gap: var(--sp-6); }
+  .now-teaser__cta   { align-self: flex-start; }
+}

@@ -1,0 +1,296 @@
+/* ── Grind Log Page ──────────────────────────────────────── */
+.grind-log {
+  min-height: 100vh;
+  background: var(--navy-900);
+  background-image: radial-gradient(ellipse 80% 50% at 50% -10%, #1a2f5220 0%, transparent 70%);
+}
+
+.gl-topbar {
+  border-bottom: 1px solid var(--navy-500);
+  padding: var(--sp-3) 0;
+  background: rgba(13, 17, 23, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+
+.gl-topbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+}
+
+.gl-back { color: var(--amber-500); transition: color var(--duration-fast); }
+.gl-back:hover { color: var(--amber-300); }
+.gl-topbar__label { color: var(--ink-100); font-weight: 500; }
+.gl-topbar__id { color: var(--ink-300); }
+
+.gl-body {
+  padding-top: var(--sp-16);
+  padding-bottom: var(--sp-24);
+}
+
+.gl-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--sp-8);
+  margin-bottom: var(--sp-8);
+}
+
+.gl-header__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.3em;
+  color: var(--amber-500);
+  margin-bottom: var(--sp-4);
+}
+
+.gl-header__title {
+  font-family: var(--font-serif);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--ink-100);
+  margin-bottom: var(--sp-3);
+}
+
+.gl-header__title em { font-style: italic; color: var(--amber-500); }
+
+.gl-header__sub {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink-300);
+  letter-spacing: 0.1em;
+}
+
+.gl-header__stats { display: flex; gap: var(--sp-10); flex-shrink: 0; }
+
+.gl-stat { display: flex; flex-direction: column; align-items: flex-end; }
+
+.gl-stat__n {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-4xl);
+  color: var(--amber-500);
+  line-height: 1;
+}
+
+.gl-stat__l {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-300);
+  letter-spacing: 0.12em;
+}
+
+.gl-rule {
+  height: 1px;
+  background: linear-gradient(90deg, var(--amber-500) 0%, var(--navy-500) 40%, transparent 100%);
+  margin-bottom: var(--sp-8);
+}
+
+/* ── Filters (tag buttons) ───────────────────────────────── */
+.gl-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-8);
+}
+
+.gl-filter {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  /* FIXED: readable colours */
+  color: var(--ink-200);
+  background: var(--navy-700);
+  border: 1px solid var(--navy-400);
+  padding: var(--sp-1) var(--sp-3);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.gl-filter:hover {
+  color: var(--amber-400);
+  border-color: var(--amber-mid);
+  background: var(--amber-dim);
+}
+
+.gl-filter--active {
+  color: var(--navy-900);
+  background: var(--amber-500);
+  border-color: var(--amber-500);
+}
+
+/* ── Feed ────────────────────────────────────────────────── */
+.gl-feed {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--navy-500);
+}
+
+/* ── Card ────────────────────────────────────────────────── */
+.gl-card {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: var(--sp-8);
+  padding: var(--sp-8) 0;
+  border-bottom: 1px solid var(--navy-500);
+  transition: background var(--duration-fast);
+}
+
+.gl-card:hover {
+  background: var(--amber-dim);
+  margin: 0 calc(-1 * var(--sp-4));
+  padding-left: var(--sp-4);
+  padding-right: var(--sp-4);
+}
+
+.gl-card__index { display: flex; flex-direction: column; padding-top: var(--sp-1); }
+
+.gl-card__num {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 900;
+  font-size: var(--text-3xl);
+  color: var(--amber-500);
+  line-height: 1;
+}
+
+.gl-card__unit {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+  letter-spacing: 0.2em;
+  margin-top: 2px;
+}
+
+.gl-card__body { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+.gl-card__meta { display: flex; align-items: center; flex-wrap: wrap; gap: var(--sp-3); }
+
+.gl-card__date {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-300);
+  letter-spacing: 0.1em;
+}
+
+/* ── Card tags — FIXED ───────────────────────────────────── */
+.gl-card__tags { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+.gl-card__tag {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-200);
+  background: var(--navy-700);
+  border: 1px solid var(--navy-400);
+  letter-spacing: 0.05em;
+  padding: 2px var(--sp-3);
+  transition: all var(--duration-fast);
+}
+
+.gl-card__tag:hover {
+  color: var(--amber-400);
+  border-color: var(--amber-mid);
+  background: var(--amber-dim);
+}
+
+.gl-card__title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: var(--text-xl);
+  color: var(--ink-100);
+  line-height: 1.35;
+  cursor: pointer;
+  transition: color var(--duration-fast);
+}
+
+.gl-card__title:hover { color: var(--amber-400); }
+
+.gl-card__content {
+  font-size: var(--text-base);
+  color: var(--ink-200);
+  line-height: 1.85;
+  font-weight: 300;
+  /* truncate to 3 lines on list page */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.gl-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--amber-500);
+  letter-spacing: 0.08em;
+  margin-top: var(--sp-1);
+  transition: color var(--duration-fast);
+}
+
+.gl-card__link:hover { color: var(--amber-300); }
+
+/* ── States ──────────────────────────────────────────────── */
+.gl-loading { display: flex; gap: var(--sp-2); padding: var(--sp-12) 0; }
+.gl-loading span {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--amber-500);
+  animation: loadingDot 1.2s ease-in-out infinite;
+}
+.gl-loading span:nth-child(2) { animation-delay: 0.15s; }
+.gl-loading span:nth-child(3) { animation-delay: 0.3s; }
+
+.gl-error {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--red);
+  padding: var(--sp-4);
+  border-left: 3px solid var(--red);
+  background: #e05c5c0d;
+}
+
+.gl-empty {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-xl);
+  color: var(--ink-300);
+  padding: var(--sp-12) 0;
+}
+
+.gl-more { padding: var(--sp-10) 0; }
+
+.gl-more-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  color: var(--ink-300);
+  background: transparent;
+  border: 1px solid var(--navy-500);
+  padding: var(--sp-3) var(--sp-6);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--duration-normal);
+}
+
+.gl-more-btn:hover {
+  color: var(--amber-400);
+  border-color: var(--amber-mid);
+  background: var(--amber-dim);
+}
+
+@media (max-width: 640px) {
+  .gl-card { grid-template-columns: 52px 1fr; gap: var(--sp-4); }
+  .gl-header { flex-direction: column; align-items: flex-start; }
+  .gl-header__stats { align-self: flex-start; }
+  .gl-stat { align-items: flex-start; }
+}

@@ -1,0 +1,202 @@
+/* ── Projects Page ───────────────────────────────────────── */
+.ppage {
+  min-height: 100vh;
+  background: var(--navy-900);
+  background-image: radial-gradient(ellipse 80% 50% at 50% -10%, #1a2f5220 0%, transparent 70%);
+}
+
+.ppage__topbar {
+  border-bottom: 1px solid var(--navy-500);
+  padding: var(--sp-3) 0;
+  background: rgba(13,17,23,0.95);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+
+.ppage__topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+}
+
+.ppage__back { color: var(--amber-500); transition: color var(--duration-fast); }
+.ppage__back:hover { color: var(--amber-300); }
+.ppage__topbar-label { color: var(--ink-100); font-weight: 500; }
+.ppage__topbar-id { color: var(--ink-300); }
+
+.ppage__body {
+  padding-top: var(--sp-16);
+  padding-bottom: var(--sp-24);
+}
+
+.ppage__header { margin-bottom: var(--sp-8); }
+
+.ppage__header-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.3em;
+  color: var(--amber-500);
+  margin-bottom: var(--sp-4);
+}
+
+.ppage__title {
+  font-family: var(--font-serif);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--ink-100);
+  margin-bottom: var(--sp-4);
+}
+
+.ppage__title em { font-style: italic; color: var(--amber-500); }
+
+.ppage__sub {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink-300);
+  letter-spacing: 0.1em;
+}
+
+.ppage__rule {
+  height: 1px;
+  background: linear-gradient(90deg, var(--amber-500) 0%, var(--navy-500) 40%, transparent 100%);
+  margin-bottom: var(--sp-8);
+}
+
+/* ── Filters ─────────────────────────────────────────────── */
+.ppage__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-8);
+}
+
+.ppage__filter {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  color: var(--ink-200);
+  background: var(--navy-700);
+  border: 1px solid var(--navy-400);
+  padding: var(--sp-1) var(--sp-3);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.ppage__filter:hover {
+  color: var(--amber-400);
+  border-color: var(--amber-mid);
+  background: var(--amber-dim);
+}
+
+.ppage__filter--active {
+  color: var(--navy-900);
+  background: var(--amber-500);
+  border-color: var(--amber-500);
+}
+
+/* ── List ────────────────────────────────────────────────── */
+.ppage__list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--navy-500);
+}
+
+.ppage__card {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: var(--sp-8);
+  padding: var(--sp-8) 0;
+  border-bottom: 1px solid var(--navy-500);
+  text-decoration: none;
+  color: inherit;
+  transition: background var(--duration-fast);
+}
+
+.ppage__card:hover {
+  background: var(--amber-dim);
+  margin: 0 calc(-1 * var(--sp-4));
+  padding-left: var(--sp-4);
+  padding-right: var(--sp-4);
+}
+
+.ppage__card-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--amber-500);
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  padding-top: var(--sp-2);
+}
+
+.ppage__card-body { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+.ppage__card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+
+.ppage__card-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--text-2xl);
+  color: var(--ink-100);
+  line-height: 1.25;
+}
+
+.ppage__card-arrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  color: var(--ink-400);
+  flex-shrink: 0;
+  transition: all var(--duration-fast);
+}
+
+.ppage__card:hover .ppage__card-arrow {
+  color: var(--amber-500);
+  transform: translate(2px, -2px);
+}
+
+.ppage__card-desc {
+  font-size: var(--text-base);
+  color: var(--ink-200);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.ppage__card-stack { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+.ppage__card-tech {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-200);
+  background: var(--navy-700);
+  border: 1px solid var(--navy-400);
+  padding: 2px var(--sp-3);
+  letter-spacing: 0.05em;
+}
+
+/* ── States ──────────────────────────────────────────────── */
+.ppage__loading { display: flex; gap: var(--sp-2); padding: var(--sp-12) 0; }
+.ppage__loading span {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--amber-500);
+  animation: loadingDot 1.2s ease-in-out infinite;
+}
+.ppage__loading span:nth-child(2) { animation-delay: 0.15s; }
+.ppage__loading span:nth-child(3) { animation-delay: 0.30s; }
+.ppage__error { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--red); padding: var(--sp-4); border-left: 3px solid var(--red); background: #e05c5c0d; }
+.ppage__empty { font-family: var(--font-serif); font-style: italic; font-size: var(--text-xl); color: var(--ink-300); padding: var(--sp-12) 0; }
+
+@media (max-width: 640px) {
+  .ppage__card { grid-template-columns: 36px 1fr; gap: var(--sp-4); }
+}

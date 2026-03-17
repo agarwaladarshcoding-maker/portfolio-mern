@@ -1,0 +1,182 @@
+/* ============================================================
+   grind-md.css
+   Markdown rendering styles for grind post content.
+   Applied via .grind-md class wrapper around <ReactMarkdown>
+   ============================================================ */
+
+.grind-md {
+  font-size: var(--text-base);
+  color: var(--ink-200);
+  line-height: 1.9;
+  font-weight: 300;
+  font-family: var(--font-sans);
+}
+
+/* ── Paragraphs ─────────────────────────────────────────── */
+.grind-md p {
+  margin-bottom: var(--sp-4);
+}
+
+.grind-md p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Bold ────────────────────────────────────────────────── */
+.grind-md strong {
+  font-weight: 600;
+  color: var(--ink-100);
+}
+
+/* ── Italic ──────────────────────────────────────────────── */
+.grind-md em {
+  font-style: italic;
+  color: var(--amber-300);
+  font-family: var(--font-serif);
+}
+
+/* ── Headings ────────────────────────────────────────────── */
+.grind-md h1,
+.grind-md h2,
+.grind-md h3 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--ink-100);
+  line-height: 1.3;
+  margin-top: var(--sp-6);
+  margin-bottom: var(--sp-3);
+}
+
+.grind-md h1 { font-size: var(--text-2xl); }
+.grind-md h2 { font-size: var(--text-xl);  }
+.grind-md h3 { font-size: var(--text-lg);  }
+
+/* ── Lists ───────────────────────────────────────────────── */
+.grind-md ul,
+.grind-md ol {
+  padding-left: var(--sp-6);
+  margin-bottom: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.grind-md ul {
+  list-style: none;
+}
+
+.grind-md ul li {
+  position: relative;
+  padding-left: var(--sp-4);
+}
+
+/* Amber bullet */
+.grind-md ul li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--amber-500);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.grind-md ol {
+  list-style: decimal;
+}
+
+.grind-md ol li::marker {
+  color: var(--amber-500);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+/* ── Inline code ─────────────────────────────────────────── */
+.grind-md code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--amber-300);
+  background: var(--amber-dim);
+  padding: 1px 6px;
+  border: 1px solid var(--amber-mid);
+  border-radius: 2px;
+}
+
+/* ── Code blocks ─────────────────────────────────────────── */
+.grind-md pre {
+  background: var(--navy-950, #080c14);
+  border: 1px solid var(--navy-500);
+  border-left: 3px solid var(--amber-500);
+  padding: var(--sp-4) var(--sp-5);
+  overflow-x: auto;
+  margin: var(--sp-4) 0;
+}
+
+.grind-md pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--ink-100);
+  font-size: var(--text-sm);
+}
+
+/* ── Blockquote ──────────────────────────────────────────── */
+.grind-md blockquote {
+  border-left: 3px solid var(--amber-500);
+  background: var(--amber-dim);
+  padding: var(--sp-3) var(--sp-5);
+  margin: var(--sp-4) 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--ink-200);
+}
+
+.grind-md blockquote p {
+  margin-bottom: 0;
+}
+
+/* ── Horizontal rule ─────────────────────────────────────── */
+.grind-md hr {
+  border: none;
+  border-top: 1px solid var(--navy-500);
+  margin: var(--sp-6) 0;
+}
+
+/* ── Links ───────────────────────────────────────────────── */
+.grind-md a {
+  color: var(--amber-400);
+  border-bottom: 1px solid var(--amber-mid);
+  transition: color var(--duration-fast), border-color var(--duration-fast);
+}
+
+.grind-md a:hover {
+  color: var(--amber-300);
+  border-bottom-color: var(--amber-400);
+}
+
+/* ── Tables ──────────────────────────────────────────────── */
+.grind-md table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--sp-4) 0;
+  font-size: var(--text-sm);
+}
+
+.grind-md th {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber-500);
+  border-bottom: 1px solid var(--navy-500);
+  padding: var(--sp-2) var(--sp-3);
+  text-align: left;
+}
+
+.grind-md td {
+  padding: var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--navy-500);
+  color: var(--ink-200);
+}
+
+.grind-md tr:last-child td {
+  border-bottom: none;
+}

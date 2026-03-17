@@ -1,0 +1,112 @@
+/* ============================================================
+   animations.css — Global Keyframe Library
+   ============================================================
+   All reusable @keyframes live here. Components import
+   globals.css which imports this file. Components apply
+   these animations via inline styles or component-level CSS.
+   ============================================================ */
+
+/* ── Fade & Slide Reveals ─────────────────────────────────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Terminal Cursor Blink ────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Scan Line ────────────────────────────────────────────── */
+/* Moving horizontal scan line — CRT / terminal aesthetic */
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+/* ── Glitch Effect ────────────────────────────────────────── */
+@keyframes glitch-1 {
+  0%   { clip-path: inset(40% 0 61% 0); transform: translate(-4px, 0); }
+  20%  { clip-path: inset(92% 0 1% 0);  transform: translate(3px, 0); }
+  40%  { clip-path: inset(43% 0 1% 0);  transform: translate(0px, 0); }
+  60%  { clip-path: inset(25% 0 58% 0); transform: translate(4px, 0); }
+  80%  { clip-path: inset(54% 0 7% 0);  transform: translate(-2px, 0); }
+  100% { clip-path: inset(58% 0 43% 0); transform: translate(1px, 0); }
+}
+
+@keyframes glitch-2 {
+  0%   { clip-path: inset(24% 0 29% 0); transform: translate(4px, 0); }
+  20%  { clip-path: inset(54% 0 21% 0); transform: translate(-3px, 0); }
+  40%  { clip-path: inset(11% 0 68% 0); transform: translate(0px, 0); }
+  60%  { clip-path: inset(65% 0 13% 0); transform: translate(-4px, 0); }
+  80%  { clip-path: inset(38% 0 47% 0); transform: translate(2px, 0); }
+  100% { clip-path: inset(71% 0 22% 0); transform: translate(-1px, 0); }
+}
+
+/* ── Number Counter Tick ──────────────────────────────────── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Pulse Glow ───────────────────────────────────────────── */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 4px var(--color-accent-mid); }
+  50%       { box-shadow: var(--glow-accent-strong); }
+}
+
+/* ── Progress Bar Fill ────────────────────────────────────── */
+@keyframes fillBar {
+  from { width: 0%; }
+  to   { width: var(--fill-width, 100%); }
+}
+
+/* ── Spin ─────────────────────────────────────────────────── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Float ────────────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* ── Utility Animation Classes ────────────────────────────── */
+.animate-fadeUp    { animation: fadeUp var(--duration-slow) var(--ease-out-expo) both; }
+.animate-fadeIn    { animation: fadeIn var(--duration-slow) var(--ease-out-expo) both; }
+.animate-blink     { animation: blink 1s step-end infinite; }
+.animate-pulseGlow { animation: pulseGlow 2s ease-in-out infinite; }
+.animate-float     { animation: float 4s ease-in-out infinite; }
+
+/* Stagger delays for lists — apply to children */
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 500ms; }
