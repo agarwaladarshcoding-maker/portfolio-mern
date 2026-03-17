@@ -17,6 +17,7 @@ import ProjectDetail from "./components/sections/ProjectDetail";
 import NowPage from "./components/sections/NowPage";
 import NotFound from "./components/sections/NotFound";
 import BackToTop from "./components/ui/BackToTop";
+import AntigravityBackground from "./components/ui/AntigravityBackground";
 import "./styles/globals.css";
 import "./styles/animations.css";
 import "./styles/grind-md.css";

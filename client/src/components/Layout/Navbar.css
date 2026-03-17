@@ -3,19 +3,26 @@
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
-  border-bottom: 1px solid transparent;
-  transition: background var(--duration-normal), border-color var(--duration-normal);
+  transition: all var(--duration-normal) var(--ease-out);
+  padding: var(--sp-2) 0;
 }
 
 .navbar--scrolled {
-  background: rgba(13, 17, 23, 0.94);
-  border-bottom-color: var(--navy-500);
+  top: var(--sp-4);
+  left: 5%;
+  right: 5%;
+  width: auto;
+  padding: 0;
+  background: rgba(20, 25, 40, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
 }
 
 [data-theme="light"] .navbar--scrolled {
-  background: rgba(245, 240, 232, 0.94);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .navbar__inner {
@@ -23,6 +30,12 @@
   align-items: center;
   height: 60px;
   gap: var(--sp-6);
+  transition: padding var(--duration-normal), height var(--duration-normal);
+}
+
+.navbar--scrolled .navbar__inner {
+  height: 52px;
+  padding: 0 var(--sp-6);
 }
 
 /* ── Logo ────────────────────────────────────────────────── */

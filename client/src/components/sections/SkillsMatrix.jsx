@@ -108,6 +108,23 @@ export default function SkillsMatrix() {
     return function() { clearTimeout(t); };
   }, [active]);
 
+  // Antigravity Glass Interaction Effect
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (window.innerWidth < 768) return;
+      const x = (e.clientX / window.innerWidth - 0.5) * 8;
+      const y = (e.clientY / window.innerHeight - 0.5) * 8;
+      
+      const elements = document.querySelectorAll('.ag-interact');
+      elements.forEach(el => {
+        el.style.transform = `rotateX(${-y}deg) rotateY(${x}deg)`;
+      });
+    };
+    
+    document.addEventListener('mousemove', handleMouseMove);
+    return () => document.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   var groups = Object.keys(SKILLS);
 
   return (
@@ -126,8 +143,8 @@ export default function SkillsMatrix() {
           </p>
         </div>
 
-        <div className="skills__layout">
-          <div className="skills__sidebar">
+        <div className="skills__layout ag-perspective-container">
+          <div className="skills__sidebar glass-card ag-interact" style={{ transition: 'transform 0.15s ease' }}>
             {groups.map(function(g) {
               return (
                 <button
@@ -145,7 +162,7 @@ export default function SkillsMatrix() {
             </blockquote>
           </div>
 
-          <div className="skills__bars">
+          <div className="skills__bars glass-card floating-element ag-interact" style={{ transition: 'transform 0.1s linear' }}>
             {SKILLS[active].map(function(s) {
               return (
                 <Bar key={s.name} name={s.name} level={s.level} animate={animate} />

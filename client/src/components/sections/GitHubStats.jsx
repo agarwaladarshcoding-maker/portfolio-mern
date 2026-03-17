@@ -55,7 +55,7 @@ function ContributionGrid(props) {
 
 function StatBox(props) {
   return (
-    <div className="gh-statbox">
+    <div className="gh-statbox glass-card floating-element ag-interact" style={{ transitionDuration: '0.1s', padding: 'var(--sp-5) var(--sp-6)' }}>
       <span className="gh-statbox__n">{props.value}</span>
       <span className="gh-statbox__l">{props.label}</span>
     </div>
@@ -137,7 +137,7 @@ export default function GitHubStats() {
         </div>
 
         {/* ── Stat row ── */}
-        <div className="ghstats__stats">
+        <div className="ghstats__stats" style={{ background: 'transparent', border: 'none', gap: 'var(--sp-4)' }}>
           <StatBox
             value={streak}
             label="current streak (days)"

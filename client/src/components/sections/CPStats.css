@@ -1,17 +1,12 @@
 /* ── CP Stats ────────────────────────────────────────────── */
 .cp-stats {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--navy-500);
-  border: 1px solid var(--navy-500);
+  grid-template-columns: 1fr;
   margin-top: var(--sp-10);
 }
 
 /* ── Panel ───────────────────────────────────────────────── */
 .cp-panel {
-  background: var(--navy-800);
-  padding: var(--sp-6);
   display: flex;
   flex-direction: column;
   gap: var(--sp-5);
@@ -305,4 +300,77 @@
 @media (max-width: 768px) {
   .cp-stats { grid-template-columns: 1fr; }
   .cp-main  { flex-direction: column; }
+}
+
+/* ── CF Activity Heatmap ─────────────────────────────────── */
+.cf-activity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin-top: var(--sp-2);
+}
+
+.cf-activity__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+.cf-activity__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-300);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cf-activity__legend {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+
+.cf-activity__legend-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+  letter-spacing: 0.1em;
+}
+
+.cf-activity__grid-wrap { overflow-x: auto; padding-bottom: var(--sp-1); }
+
+.cf-grid {
+  display: flex;
+  gap: 3px;
+  min-width: max-content;
+}
+
+.cf-grid__col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* Cell colours — amber palette instead of green */
+.cf-cell {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  transition: opacity var(--duration-fast);
+}
+.cf-cell:hover { opacity: 0.7; }
+.cf-cell--0 { background: rgba(255,255,255,0.05); }
+.cf-cell--1 { background: rgba(245,158,11,0.2); }
+.cf-cell--2 { background: rgba(245,158,11,0.45); }
+.cf-cell--3 { background: rgba(245,158,11,0.7); }
+.cf-cell--4 { background: #f59e0b; }
+
+.cf-activity__footer {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+  letter-spacing: 0.1em;
 }

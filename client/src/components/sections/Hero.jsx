@@ -66,9 +66,14 @@ export default function Hero() {
           <span className="hero__byline-text">Subject:</span>
         </div>
 
-        <h1 className={"hero__name " + (visible ? "hero__name--visible" : "")}>
-          <em className="hero__name-em">Adarsh</em>
-          <span className="hero__name-plain"> Agarwala</span>
+        <h1 className={"hero__name floating-element ag-interact " + (visible ? "hero__name--visible" : "")} style={{ transitionDuration: '0.1s', transformStyle: 'preserve-3d' }}>
+          <span className="hero__name-layer" style={{ transform: 'translateZ(40px)' }}>
+            <em className="hero__name-em">Adarsh</em>
+          </span>
+          <br/>
+          <span className="hero__name-layer" style={{ transform: 'translateZ(20px)' }}>
+            <span className="hero__name-plain">Agarwala</span>
+          </span>
         </h1>
 
         {/* Divider rule like a research paper */}
@@ -83,36 +88,41 @@ export default function Hero() {
           </span>
         </div>
 
-        {/* Abstract — like a research paper abstract */}
-        <div className={"hero__abstract " + (visible ? "hero__abstract--visible" : "")}>
-          <div className="hero__abstract-label">Abstract</div>
-          <p className="hero__abstract-text">
-            Student, builder, and someone who figures things out.
-            Currently working at the intersection of quantitative finance,
-            machine learning, and startup building. I code anything.
-            I take responsibility. I do not stop.
-          </p>
-        </div>
+        {/* Antigravity Glass Dashboard */}
+        <div className={"hero__dashboard glass-card floating-element ag-interact " + (visible ? "hero__dashboard--visible" : "")} style={{ transitionDuration: '0.1s' }}>
+          
+          {/* Abstract */}
+          <div className="hero__abstract">
+            <div className="hero__abstract-label">Abstract</div>
+            <p className="hero__abstract-text">
+              Student, builder, and someone who figures things out.
+              Currently working at the intersection of quantitative finance,
+              machine learning, and startup building. I code anything.
+              I take responsibility. I do not stop.
+            </p>
+          </div>
 
-        {/* Keywords */}
-        <div className={"hero__keywords " + (visible ? "hero__keywords--visible" : "")}>
-          <span className="hero__keywords-label">Keywords:</span>
-          {["Algo Trading", "ML / AI", "Competitive Programming", "Startups", "Mumbai"].map(function(kw) {
-            return <span key={kw} className="hero__keyword">{kw}</span>;
-          })}
-        </div>
+          {/* Keywords */}
+          <div className="hero__keywords">
+            <span className="hero__keywords-label">Keywords:</span>
+            {["Algo Trading", "ML / AI", "Competitive Programming", "Startups", "Mumbai"].map(function(kw) {
+              return <span key={kw} className="hero__keyword">{kw}</span>;
+            })}
+          </div>
 
-        {/* CTAs */}
-        <div className={"hero__ctas " + (visible ? "hero__ctas--visible" : "")}>
-          <a href="#grind" className="hero__cta hero__cta--primary">
-            Read the grind log
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-              <path d="M2 6.5h9M6.5 2l4.5 4.5L6.5 11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </a>
-          <a href="#contact" className="hero__cta hero__cta--ghost">
-            Get in touch →
-          </a>
+          {/* CTAs */}
+          <div className="hero__ctas">
+            <a href="#grind" className="hero__cta hero__cta--primary floating-element">
+              Read the grind log
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                <path d="M2 6.5h9M6.5 2l4.5 4.5L6.5 11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
+            <a href="#contact" className="hero__cta hero__cta--ghost floating-element">
+              Get in touch →
+            </a>
+          </div>
+
         </div>
 
       </div>

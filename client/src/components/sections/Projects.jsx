@@ -56,7 +56,8 @@ export default function Projects() {
                 <a
                   key={p._id}
                   href={"/projects/" + p._id}
-                  className={"project-card " + (isHovered ? "project-card--hovered" : "")}
+                  className={"project-card glass-card floating-element ag-interact " + (isHovered ? "project-card--hovered" : "")}
+                  style={{ transitionDuration: '0.1s' }}
                   onMouseEnter={function() { setHoveredId(p._id); }}
                   onMouseLeave={function() { setHoveredId(null); }}
                 >

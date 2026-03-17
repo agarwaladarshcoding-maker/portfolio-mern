@@ -3,7 +3,6 @@ import "./CPStats.css";
 
 // ── Set your handles here ──────────────────────────────────
 var CF_HANDLE   = "AdarshAg";   // ← replace
-var LC_USERNAME = "AdarshAgarwala";   // ← confirm
 
 // ── Rank → colour ──────────────────────────────────────────
 function rankColor(rank) {
@@ -130,13 +129,74 @@ function StreakBar(props) {
   );
 }
 
+// ── Codeforces Activity Heatmap (GitHub-style) ─────────────
+function CFActivityGrid(props) {
+  var days = props.days || [];
+  if (!days.length) return null;
+
+  // Find max to scale colour intensity
+  var max = 1;
+  days.forEach(function(d) { if (d.count > max) max = d.count; });
+
+  function getLevel(count) {
+    if (count === 0) return 0;
+    var ratio = count / max;
+    if (ratio < 0.2) return 1;
+    if (ratio < 0.4) return 2;
+    if (ratio < 0.7) return 3;
+    return 4;
+  }
+
+  // Group days into weeks (7-day columns)
+  var weeks = [];
+  for (var i = 0; i < days.length; i += 7) {
+    weeks.push(days.slice(i, i + 7));
+  }
+
+  var totalActive = days.filter(function(d) { return d.count > 0; }).length;
+
+  return (
+    <div className="cf-activity">
+      <div className="cf-activity__header">
+        <span className="cf-activity__label">practice activity — last 52 weeks</span>
+        <div className="cf-activity__legend">
+          <span className="cf-activity__legend-label">less</span>
+          {[0,1,2,3,4].map(function(l) {
+            return <div key={l} className={"cf-cell cf-cell--" + l} />;
+          })}
+          <span className="cf-activity__legend-label">more</span>
+        </div>
+      </div>
+      <div className="cf-activity__grid-wrap">
+        <div className="cf-grid">
+          {weeks.map(function(week, wi) {
+            return (
+              <div key={wi} className="cf-grid__col">
+                {week.map(function(day, di) {
+                  return (
+                    <div
+                      key={di}
+                      className={"cf-cell cf-cell--" + getLevel(day.count)}
+                      title={day.count + " submissions on " + day.date}
+                    />
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="cf-activity__footer">
+        <span className="cf-activity__total">{totalActive} active days in the last year</span>
+      </div>
+    </div>
+  );
+}
+
 export default function CPStats() {
   var [cf,     setCF]     = useState(null);
-  var [lc,     setLC]     = useState(null);
   var [cfErr,  setCFErr]  = useState("");
-  var [lcErr,  setLCErr]  = useState("");
   var [cfLoad, setCFLoad] = useState(true);
-  var [lcLoad, setLCLoad] = useState(true);
 
   useEffect(function() {
     fetch("/api/codeforces/stats?handle=" + CF_HANDLE)
@@ -147,22 +207,13 @@ export default function CPStats() {
       })
       .catch(function(e) { setCFErr(e.message); })
       .finally(function() { setCFLoad(false); });
-
-    fetch("/api/leetcode/stats?username=" + LC_USERNAME)
-      .then(function(r) { return r.json(); })
-      .then(function(d) {
-        if (!d.success) throw new Error(d.error);
-        setLC(d.data);
-      })
-      .catch(function(e) { setLCErr(e.message); })
-      .finally(function() { setLCLoad(false); });
   }, []);
 
   return (
-    <div className="cp-stats">
+    <div className="cp-stats" style={{ background: 'transparent', border: 'none', gap: 'var(--sp-6)' }}>
 
       {/* ── Codeforces ── */}
-      <div className="cp-panel">
+      <div className="cp-panel glass-card floating-element ag-interact" style={{ transitionDuration: '0.1s' }}>
         <div className="cp-panel__header">
           <div className="cp-panel__title-row">
             <span className="cp-panel__platform">Codeforces</span>
@@ -238,101 +289,19 @@ export default function CPStats() {
                 </div>
               </div>
             )}
-          </>
-        ) : null}
-      </div>
 
-      {/* ── LeetCode ── */}
-      <div className="cp-panel">
-        <div className="cp-panel__header">
-          <div className="cp-panel__title-row">
-            <span className="cp-panel__platform">LeetCode</span>
-            <a
-              href={"https://leetcode.com/" + LC_USERNAME}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cp-panel__handle"
-            >
-              @{LC_USERNAME} ↗
-            </a>
-          </div>
-        </div>
+            {/* Practice activity heatmap */}
+            {cf.dailyActivity && cf.dailyActivity.length > 0 && (
+              <CFActivityGrid days={cf.dailyActivity} />
+            )}
 
-        {lcLoad ? (
-          <div className="cp-loading"><span /><span /><span /></div>
-        ) : lcErr ? (
-          <div className="cp-error">{lcErr}</div>
-        ) : lc ? (
-          <>
-            {/* Main solved count */}
-            <div className="cp-main">
-              <div className="cp-main__rating">
-                <span className="cp-main__n">{lc.solved}</span>
-                <span className="cp-main__label">problems solved</span>
-              </div>
-              <div className="cp-main__meta">
-                <div className="cp-meta-row">
-                  <span className="cp-meta-label">Easy</span>
-                  <span className="cp-meta-val cp--easy">{lc.easy}</span>
-                </div>
-                <div className="cp-meta-row">
-                  <span className="cp-meta-label">Medium</span>
-                  <span className="cp-meta-val cp--med">{lc.medium}</span>
-                </div>
-                <div className="cp-meta-row">
-                  <span className="cp-meta-label">Hard</span>
-                  <span className="cp-meta-val cp--hard">{lc.hard}</span>
-                </div>
-                {lc.ranking > 0 && (
-                  <div className="cp-meta-row">
-                    <span className="cp-meta-label">Global rank</span>
-                    <span className="cp-meta-val">#{lc.ranking.toLocaleString()}</span>
-                  </div>
-                )}
-                <div className="cp-meta-row">
-                  <span className="cp-meta-label">Active days</span>
-                  <span className="cp-meta-val">{lc.totalActiveDays}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Progress bar — solved / total */}
-            <div className="cp-progress">
-              <div className="cp-progress__header">
-                <span className="cp-progress__label">completion</span>
-                <span className="cp-progress__pct">
-                  {lc.totalQ ? Math.round((lc.solved / lc.totalQ) * 100) : 0}%
-                  {" of "}{lc.totalQ}
-                </span>
-              </div>
-              <div className="cp-progress__track">
-                <div
-                  className="cp-progress__easy"
-                  style={{ width: lc.totalQ ? (lc.easy / lc.totalQ * 100) + "%" : "0%" }}
-                />
-                <div
-                  className="cp-progress__med"
-                  style={{ width: lc.totalQ ? (lc.medium / lc.totalQ * 100) + "%" : "0%" }}
-                />
-                <div
-                  className="cp-progress__hard"
-                  style={{ width: lc.totalQ ? (lc.hard / lc.totalQ * 100) + "%" : "0%" }}
-                />
-              </div>
-              <div className="cp-progress__legend">
-                <span className="cp--easy">■ Easy {lc.easy}</span>
-                <span className="cp--med">■ Medium {lc.medium}</span>
-                <span className="cp--hard">■ Hard {lc.hard}</span>
-              </div>
-            </div>
-
-            {/* Streak */}
-            <StreakBar
-              current={lc.currentStreak}
-              longest={lc.longestStreak}
-              extra={lc.totalActiveDays}
-              extraLabel="total active days"
-            />
+            {/* Practice streak */}
+            {cf.streak && (
+              <StreakBar
+                current={cf.streak.current}
+                longest={cf.streak.longest}
+              />
+            )}
           </>
         ) : null}
       </div>

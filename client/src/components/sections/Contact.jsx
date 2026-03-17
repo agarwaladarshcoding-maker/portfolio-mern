@@ -45,7 +45,7 @@ export default function Contact() {
 
         <div className="contact__layout">
 
-          <div className="contact__left">
+          <div className="contact__left glass-card floating-element ag-interact" style={{ transitionDuration: '0.1s' }}>
             <h2 className="contact__title">
               Let's build
               <br />
@@ -77,7 +77,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="contact__right">
+          <div className="contact__right glass-card floating-element ag-interact" style={{ transitionDuration: '0.1s' }}>
             {status === "sent" ? (
               <div className="contact__success">
                 <div className="contact__success-check">✓</div>

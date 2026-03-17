@@ -90,9 +90,8 @@
 .grind-card--featured {
   position: relative;
   padding: var(--sp-8);
-  background: var(--navy-800);
-  border: 1px solid var(--navy-500);
-  border-top: 3px solid var(--amber-500);
+  /* Inherits backgrounds and borders from global .glass-card */
+  border-top: 3px solid var(--amber-500) !important;
   display: flex;
   flex-direction: column;
   gap: var(--sp-5);
@@ -196,6 +195,7 @@
   font-weight: 300;
   display: -webkit-box;
   -webkit-line-clamp: 4;
+  line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

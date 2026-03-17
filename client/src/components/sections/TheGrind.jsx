@@ -93,9 +93,9 @@ export default function TheGrind() {
         ) : !latest ? (
           <div className="grind__empty">The grind begins now. Check back soon.</div>
         ) : (
-          <article className="grind-card grind-card--featured">
+          <article className="grind-card grind-card--featured glass-card floating-element ag-interact" style={{ transitionDuration: '0.1s' }}>
 
-            <div className="grind-card__badge">Latest Entry</div>
+            <div className="grind-card__badge floating-element">Latest Entry</div>
 
             <div className="grind-card__top">
               <div className="grind-card__day-block">

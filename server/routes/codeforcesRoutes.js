@@ -80,6 +80,8 @@ router.get("/stats", async function(req, res) {
         ratingGraph:    ratingGraph,
         avatar:         u.avatar          || "",
         url:            "https://codeforces.com/profile/" + handle,
+        dailyActivity:  buildDailyActivity(submissions),
+        streak:         computeStreak(submissions),
       }
     });
 
@@ -88,5 +90,75 @@ router.get("/stats", async function(req, res) {
     return res.status(500).json({ success: false, error: err.message });
   }
 });
+
+
+// ── Build GitHub-style daily activity grid (last 52 weeks) ─
+function buildDailyActivity(submissions) {
+  // Aggregate any submission (not just OK) per day to match "practice" intent
+  var dayMap = {};
+  submissions.forEach(function(s) {
+    var date = new Date(s.creationTimeSeconds * 1000)
+      .toISOString().slice(0, 10);
+    dayMap[date] = (dayMap[date] || 0) + 1;
+  });
+
+  // Build a 52-week grid (364 days) ending today
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+  var result = [];
+  for (var i = 363; i >= 0; i--) {
+    var d = new Date(today);
+    d.setDate(d.getDate() - i);
+    var key = d.toISOString().slice(0, 10);
+    result.push({ date: key, count: dayMap[key] || 0 });
+  }
+  return result;
+}
+
+// ── Compute current and longest daily practice streak ──────
+function computeStreak(submissions) {
+  var practiceSet = {};
+  submissions.forEach(function(s) {
+    var date = new Date(s.creationTimeSeconds * 1000)
+      .toISOString().slice(0, 10);
+    practiceSet[date] = true;
+  });
+
+  // Sort unique dates descending
+  var dates = Object.keys(practiceSet).sort().reverse();
+  if (!dates.length) return { current: 0, longest: 0 };
+
+  var today = new Date().toISOString().slice(0, 10);
+  var yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+
+  // Current streak: consecutive days ending today or yesterday
+  var current = 0;
+  var checkDate = practiceSet[today] ? today : (practiceSet[yesterday] ? yesterday : null);
+  if (checkDate) {
+    var cursor = new Date(checkDate);
+    while (practiceSet[cursor.toISOString().slice(0, 10)]) {
+      current++;
+      cursor.setDate(cursor.getDate() - 1);
+    }
+  }
+
+  // Longest streak overall
+  var longest = 0;
+  var run = 0;
+  var prev = null;
+  // iterate ascending
+  var asc = Object.keys(practiceSet).sort();
+  asc.forEach(function(d) {
+    if (!prev) { run = 1; }
+    else {
+      var diff = (new Date(d) - new Date(prev)) / 86400000;
+      run = diff === 1 ? run + 1 : 1;
+    }
+    if (run > longest) longest = run;
+    prev = d;
+  });
+
+  return { current: current, longest: longest };
+}
 
 module.exports = router;
