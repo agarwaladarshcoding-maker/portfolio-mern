@@ -1,0 +1,227 @@
+/* ============================================================
+   MaintenancePage.css
+   Deep Navy · Amber — matching portfolio design system
+   ============================================================ */
+
+/* ── Canvas background ──────────────────────────────────── */
+.maint {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--navy-900);
+  overflow: hidden;
+  z-index: 0;
+  padding: 1rem;
+}
+
+.maint__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Ambient glow ─────────────────────────────────────── */
+.maint__glow {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 500px;
+  background: radial-gradient(ellipse at center, rgba(245,166,35,0.07) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Card ─────────────────────────────────────────────── */
+.maint__card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 640px;
+  background: var(--navy-800);
+  border: 1px solid var(--navy-500);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(245,166,35,0.06),
+    0 32px 80px rgba(0,0,0,0.55),
+    0 0 60px rgba(245,166,35,0.04);
+  animation: scaleIn 600ms cubic-bezier(0.16,1,0.3,1) both;
+}
+
+/* ── Fake window top bar ─────────────────────────────── */
+.maint__topbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  background: var(--navy-700);
+  border-bottom: 1px solid var(--navy-500);
+}
+
+.maint__dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+.maint__dot--red    { background: #e05c5c; }
+.maint__dot--yellow { background: #f5a623; }
+.maint__dot--green  { background: #4caf7d; }
+
+.maint__topbar-label {
+  margin-left: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--ink-300);
+  letter-spacing: 0.08em;
+}
+
+/* ── Body ─────────────────────────────────────────────── */
+.maint__body {
+  padding: 2.5rem 2.5rem 2rem;
+}
+
+.maint__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--amber-500);
+  margin-bottom: 1.25rem;
+}
+
+/* ── Heading ──────────────────────────────────────────── */
+.maint__title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 6vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--ink-100);
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.maint__title--accent {
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(130deg, var(--amber-500) 0%, var(--amber-300) 60%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: amberPulse 3.5s ease-in-out infinite;
+}
+
+.maint__sub {
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  color: var(--ink-200);
+  line-height: 1.65;
+  max-width: 440px;
+  margin-bottom: 2rem;
+}
+
+/* ── Progress bar ──────────────────────────────────────── */
+.maint__progress-wrap {
+  margin-bottom: 1.5rem;
+}
+
+.maint__progress-text {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--ink-300);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.maint__progress-track {
+  position: relative;
+  height: 5px;
+  background: var(--navy-600);
+  border-radius: 999px;
+  overflow: visible;
+}
+
+.maint__progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--amber-500), var(--amber-300));
+  border-radius: 999px;
+  transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 0 10px rgba(245,166,35,0.5);
+}
+
+.maint__progress-label {
+  position: absolute;
+  right: 0;
+  top: -22px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--amber-500);
+  letter-spacing: 0.1em;
+}
+
+/* ── Terminal ──────────────────────────────────────────── */
+.maint__terminal {
+  background: var(--navy-900);
+  border: 1px solid var(--navy-500);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+  min-height: 94px;
+}
+
+.maint__terminal-pre {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--green);
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+.maint__cursor {
+  display: inline-block;
+  animation: blink 1s step-end infinite;
+  color: var(--amber-500);
+}
+
+/* ── Links ─────────────────────────────────────────────── */
+.maint__links {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.maint__link {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-300);
+  text-transform: uppercase;
+  border-bottom: 1px solid transparent;
+  transition: color 160ms, border-color 160ms;
+}
+
+.maint__link:hover {
+  color: var(--amber-500);
+  border-color: var(--amber-500);
+}
+
+/* ── Footer note ────────────────────────────────────────── */
+.maint__footer-note {
+  position: relative;
+  z-index: 1;
+  margin-top: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--ink-400);
+  letter-spacing: 0.1em;
+  animation: fadeUp 800ms 400ms both;
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 520px) {
+  .maint__body { padding: 1.75rem 1.5rem 1.5rem; }
+  .maint__title { font-size: 2rem; }
+}

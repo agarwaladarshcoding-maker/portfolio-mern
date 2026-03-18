@@ -18,9 +18,16 @@ import NowPage from "./components/sections/NowPage";
 import NotFound from "./components/sections/NotFound";
 import BackToTop from "./components/ui/BackToTop";
 import AntigravityBackground from "./components/ui/AntigravityBackground";
+import MaintenancePage from "./components/sections/MaintenancePage";
 import "./styles/globals.css";
 import "./styles/animations.css";
 import "./styles/grind-md.css";
+
+// ─────────────────────────────────────────────────────────────
+// MAINTENANCE MODE — flip to false when you're ready to go live
+// Admin panel (/admin) is always accessible regardless.
+// ─────────────────────────────────────────────────────────────
+var MAINTENANCE_MODE = true;
 
 var HAS_LOADED = sessionStorage.getItem("portfolio_loaded") === "1";
 
@@ -32,7 +39,12 @@ const AppInner = () => {
 
   var path = window.location.pathname;
 
-  if (path === "/admin")                                  return <AdminPanel />;
+  // Admin is always reachable so you can manage content during maintenance
+  if (path === "/admin") return <AdminPanel />;
+
+  // Show maintenance page for everyone else until you're ready
+  if (MAINTENANCE_MODE) return <MaintenancePage />;
+
   if (path.startsWith("/grind/") && path.length > 7)     return <GrindPost />;
   if (path === "/grind")                                  return <GrindLog />;
   if (path.startsWith("/projects/") && path.length > 10) return <ProjectDetail />;
