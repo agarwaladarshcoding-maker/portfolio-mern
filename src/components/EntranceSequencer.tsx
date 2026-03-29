@@ -28,39 +28,44 @@ const MESSAGES = [
  */
 export function EntranceSequencer() {
   const [lines, setLines] = useState<string[]>([]);
-  const [phase, setPhase] = useState<"running" | "fading" | "done">("running");
+  // We start 'idle' to prevent hydration mismatches, then switch to 'running' or 'done' immediately on mount.
+  const [phase, setPhase] = useState<"idle" | "running" | "fading" | "done">("idle");
   const startedRef = useRef(false);
 
   useEffect(() => {
-    // Prevent double-run in React Strict Mode
     if (startedRef.current) return;
     startedRef.current = true;
 
-    // Mark session so server skips this on next navigation
+    // Check if they've already seen it this session
+    if (document.cookie.includes("hasSeenBootV2=true")) {
+      setPhase("done");
+      return;
+    }
+
+    // Mark session
     document.cookie = "hasSeenBootV2=true; path=/; max-age=86400;";
+    setPhase("running");
 
     let index = 0;
-    const INTERVAL = 130; // ms per line
+    const INTERVAL = 130;
 
     const tick = () => {
       if (index < MESSAGES.length) {
-        const current = index;
-        setLines((prev) => [...prev, MESSAGES[current]]);
+        setLines((prev) => [...prev, MESSAGES[index]]);
         index++;
         timer = window.setTimeout(tick, INTERVAL);
       } else {
-        // All messages shown — wait briefly then fade
         window.setTimeout(() => setPhase("fading"), 300);
         window.setTimeout(() => setPhase("done"), 750);
       }
     };
 
-    let timer = window.setTimeout(tick, 0); // fire first message immediately
+    let timer = window.setTimeout(tick, 50);
 
     return () => window.clearTimeout(timer);
   }, []);
 
-  if (phase === "done") return null;
+  if (phase === "done" || phase === "idle") return null;
 
   return (
     <div

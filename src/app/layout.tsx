@@ -6,7 +6,6 @@ import { Navbar } from "@/components/Navbar";
 import { EntranceSequencer } from "@/components/EntranceSequencer";
 import { StartupBubble } from "@/components/StartupBubble";
 import { MaintenanceScreen } from "@/components/MaintenanceScreen";
-import { cookies } from "next/headers";
 import "@/components/StartupBubble.css";
 
 const playfair = Playfair_Display({
@@ -42,13 +41,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://adarshagarwala.com"),
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = await cookies();
-  const hasSeenBoot = cookieStore?.get('hasSeenBootV2')?.value === 'true';
   const isMaintenance = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
 
   return (
@@ -59,7 +56,7 @@ export default async function RootLayout({
             <MaintenanceScreen />
           ) : (
             <>
-              {!hasSeenBoot && <EntranceSequencer />}
+              <EntranceSequencer />
               <StartupBubble />
               <div className="container">
                 <Navbar />
