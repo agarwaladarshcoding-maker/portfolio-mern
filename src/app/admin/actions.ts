@@ -40,7 +40,7 @@ export async function submitGrindPost(formData: FormData) {
 
   const title = formData.get("title") as string;
   const dayCount = parseInt(formData.get("dayCount") as string, 10);
-  const tagsString = formData.get("tags") as string;
+  const tagsString = (formData.get("tags") as string) || "";
   const body = formData.get("body") as string;
   
   const tags = tagsString.split(",").map((t) => t.trim()).filter((t) => t.length > 0);
@@ -118,7 +118,7 @@ export async function broadcastUpdate(formData: FormData) {
   await connectDB();
   const verifiedSubscribers = await Subscriber.find({ verified: true }).lean();
 
-  if (verifiedSubscribers.length === 0) {
+  if (!verifiedSubscribers || verifiedSubscribers.length === 0) {
     console.log("No verified subscribers to notify.");
     redirect("/admin");
     return;

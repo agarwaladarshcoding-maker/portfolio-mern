@@ -7,9 +7,7 @@ import connectDB from "@/lib/db";
 import { CANONICAL_NOW } from "@/lib/now-content";
 import "@/components/Grind.css";
 
-export const metadata = {
-  title: "Admin Panel | Secured",
-};
+// metadata inherited
 
 /**
  * AdminPage — Server Component

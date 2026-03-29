@@ -28,10 +28,18 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
-// Stricter metadata for Next 16 / React 19
+// Next 16 / React 19 viewport metadata
+export const viewport = {
+  themeColor: "#0a0a0a",
+  width: "device-width",
+  initialScale: 1,
+};
+
+// Simplified metadata
 export const metadata: Metadata = {
-  title: "Adarsh Agarwala",
-  description: "Systems engineer & quant developer.",
+  title: "Adarsh Agarwala | Systems & Quant",
+  description: "Advanced systems engineer and quantitative developer portfolio.",
+  metadataBase: new URL("https://adarshagarwala.com"),
 };
 
 export default async function RootLayout({
@@ -40,7 +48,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const cookieStore = await cookies();
-  const hasSeenBoot = cookieStore.get('hasSeenBootV2')?.value === 'true';
+  const hasSeenBoot = cookieStore?.get('hasSeenBootV2')?.value === 'true';
   const isMaintenance = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
 
   return (

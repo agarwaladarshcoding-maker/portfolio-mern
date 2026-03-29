@@ -19,6 +19,7 @@ export function Typewriter({ words, delay = 100 }: { words: string[]; delay?: nu
 
   useEffect(() => {
     let ticker = setTimeout(() => {
+      if (!words || words.length === 0) return;
       const i = loopNum % words.length;
       const fullText = words[i];
 

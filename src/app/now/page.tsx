@@ -6,10 +6,7 @@ import remarkGfm from "remark-gfm";
 import "@/components/Grind.css";
 import { CANONICAL_NOW } from "@/lib/now-content";
 
-export const metadata = {
-  title: "Now | Adarsh Agarwala",
-  description: "What Adarsh Agarwala is building, learning, and thinking about right now.",
-};
+// metadata is inherited from root layout for now
 
 /**
  * NowPage — Server Component
@@ -28,7 +25,7 @@ export default async function NowPage() {
     console.warn("Database connection or query failed:", error);
   }
 
-  const timestamp = nowDoc
+  const timestamp = (nowDoc && nowDoc.lastUpdated)
     ? new Date(nowDoc.lastUpdated).toISOString().replace("T", " ").replace(/\.\d+Z/, " UTC")
     : new Date().toISOString().replace("T", " ").replace(/\.\d+Z/, " UTC");
 

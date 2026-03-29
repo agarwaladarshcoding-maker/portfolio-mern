@@ -4,9 +4,7 @@ import Grind from "@/models/Grind";
 import Link from "next/link";
 import "@/components/Grind.css"; // Reuse existing Grind CSS
 
-export const metadata = {
-  title: "The Grind | Archive",
-};
+// metadata inherited
 
 export default async function GrindArchive() {
   let logs: any[] = [];
@@ -25,7 +23,7 @@ export default async function GrindArchive() {
         Chronological archive of consistent daily systematic logging.
       </p>
 
-      {logs.length === 0 ? (
+      {(!logs || logs.length === 0) ? (
         <div className="font-data" style={{ color: 'var(--accent-muted)' }}>
           [SYSTEM] No logs found in the immutable ledger.
         </div>
