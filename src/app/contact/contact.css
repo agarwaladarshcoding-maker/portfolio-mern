@@ -1,0 +1,196 @@
+/* ════════════════════════════════════════════
+   Contact Page — Terminal Aesthetic Form
+   ════════════════════════════════════════════ */
+
+.contact-page {
+  padding-top: 4rem;
+  padding-bottom: 6rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+/* ── Left: Info ── */
+.contact-info {
+  position: sticky;
+  top: 5rem;
+}
+
+.contact-intro {
+  color: var(--foreground);
+  opacity: 0.75;
+  line-height: 1.7;
+  margin: 1.5rem 0 2.5rem;
+  font-size: 1.05rem;
+  max-width: 40ch;
+}
+
+.socials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+}
+
+.social-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--foreground);
+  font-size: 0.85rem;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.social-row:last-child {
+  border-bottom: none;
+}
+
+.social-row:hover {
+  background-color: color-mix(in srgb, var(--accent) 6%, var(--background));
+  color: var(--accent);
+}
+
+.social-row:hover .social-arrow {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+.social-label {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  width: 90px;
+  flex-shrink: 0;
+}
+
+.social-handle {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.social-arrow {
+  opacity: 0.4;
+  transition: color 0.15s ease, transform 0.2s ease;
+}
+
+/* ── Right: Form ── */
+.contact-form-wrapper {
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.terminal-bar {
+  background: var(--border);
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* reuse .dot classes from Console.css */
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.red    { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green  { background: #27c93f; }
+
+.contact-form {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  opacity: 0.8;
+}
+
+.field-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
+  padding: 0.6rem 0;
+  font-size: 0.95rem;
+  outline: none;
+  width: 100%;
+  font-family: var(--font-mono), monospace;
+  transition: border-color 0.2s ease;
+}
+
+.field-input::placeholder {
+  color: var(--foreground);
+  opacity: 0.3;
+}
+
+.field-input:focus {
+  border-bottom-color: var(--accent);
+}
+
+textarea.field-input {
+  padding-top: 0.8rem;
+}
+
+.btn-send {
+  align-self: flex-start;
+  padding: 0.75rem 1.5rem;
+  background: var(--accent);
+  color: var(--background);
+  border: 1px solid var(--accent);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-mono), monospace;
+}
+
+.btn-send:hover:not(:disabled) {
+  background: transparent;
+  color: var(--accent);
+}
+
+.btn-send:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-success {
+  padding: 3rem 2rem;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .contact-info {
+    position: static;
+  }
+
+  .contact-intro {
+    max-width: 100%;
+  }
+}

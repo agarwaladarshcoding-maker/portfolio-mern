@@ -1,0 +1,110 @@
+.ledger-container {
+  width: 100%;
+  margin: 2rem 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+
+.ledger-header {
+  display: flex;
+  background-color: var(--border);
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+.ledger-body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Wrapper link — invisible but makes full row clickable */
+.ledger-row-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.ledger-row-link:last-child {
+  border-bottom: none;
+}
+
+.ledger-row-link:hover {
+  background-color: color-mix(in srgb, var(--accent) 5%, var(--background));
+  border-color: var(--accent);
+  color: inherit;
+}
+
+.ledger-row-link:hover .col-arrow {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+.ledger-row {
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  cursor: pointer;
+}
+
+.col-arrow {
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding-left: 1rem;
+  opacity: 0.4;
+  transition: color 0.2s ease, transform 0.2s ease;
+  font-size: 1rem;
+}
+
+.col-name { flex: 2; font-weight: 600; padding-right: 1rem; }
+.col-lang { flex: 0.5; padding-right: 1rem; }
+.col-metrics { flex: 1.5; padding-right: 1rem; color: var(--accent); }
+.col-desc { flex: 3; color: var(--foreground); opacity: 0.8; }
+
+.terminal-pill {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--accent-muted);
+  border-radius: 3px;
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+.row-title {
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+/* ── Mobile: vertical stacking ── */
+@media (max-width: 768px) {
+  .ledger-header {
+    display: none;
+  }
+
+  .ledger-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 1rem;
+  }
+
+  /* Label each field inline on mobile */
+  .col-lang::before  { content: "Lang: "; opacity: 0.5; font-size: 0.72rem; text-transform: uppercase; }
+  .col-metrics::before { content: "Metric: "; opacity: 0.5; font-size: 0.72rem; text-transform: uppercase; }
+  .col-desc::before  { content: "About: "; opacity: 0.5; font-size: 0.72rem; text-transform: uppercase; }
+
+  .col-name { flex: none; font-size: 1.1rem; }
+  .col-lang { flex: none; }
+  .col-metrics { flex: none; }
+  .col-desc { flex: none; opacity: 0.75; font-size: 0.88rem; }
+
+  .col-arrow {
+    display: none;
+  }
+}

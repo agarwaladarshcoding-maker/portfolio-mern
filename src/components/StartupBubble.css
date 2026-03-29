@@ -1,0 +1,220 @@
+/* ════════════════════════════════════════════
+   StartupBubble — Floating stealth startup card
+   Bottom-right corner, always visible
+   ════════════════════════════════════════════ */
+
+/* ── Trigger pill ── */
+.bubble-trigger {
+  position: fixed;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  z-index: 200;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.6rem 1.1rem;
+  background: var(--background);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border-radius: 2rem;
+
+  box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.bubble-trigger:hover,
+.bubble-trigger--open {
+  background: var(--accent);
+  color: var(--background);
+}
+
+.bubble-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse-dot 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.bubble-trigger--open .bubble-dot {
+  animation: none;
+}
+
+/* ── Expanded panel ── */
+.bubble-panel {
+  position: fixed;
+  bottom: 5rem;
+  right: 1.75rem;
+  z-index: 199;
+
+  width: min(340px, calc(100vw - 3.5rem));
+  background: var(--background);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+
+  display: flex;
+  flex-direction: column;
+
+  /* Entrance animation */
+  animation: bubbleIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: bottom right;
+}
+
+@keyframes bubbleIn {
+  from { opacity: 0; transform: scale(0.9) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.bubble-header {
+  background: var(--border);
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.bubble-message {
+  padding: 1.2rem 1.2rem 0.8rem;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  user-select: none;
+}
+
+.bubble-message:hover {
+  color: var(--accent);
+}
+
+.bubble-tap {
+  color: var(--accent);
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* ── Status log ── */
+.bubble-updates {
+  padding: 0 1.2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.bubble-update-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+.bubble-ok      { color: #27c93f; flex-shrink: 0; }
+.bubble-wip     { color: #ffbd2e; flex-shrink: 0; }
+.bubble-pending { color: var(--fg-muted); flex-shrink: 0; }
+
+/* ── Email form ── */
+.bubble-form {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.bubble-cta {
+  font-size: 0.82rem;
+  opacity: 0.65;
+  margin: 0 0 0.75rem;
+  line-height: 1.5;
+}
+
+.bubble-input-row {
+  display: flex;
+  gap: 0;
+}
+
+.bubble-input {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-right: none;
+  color: var(--foreground);
+  padding: 0.55rem 0.8rem;
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.bubble-input:focus {
+  border-color: var(--accent);
+}
+
+.bubble-input::placeholder {
+  opacity: 0.35;
+}
+
+.bubble-submit {
+  padding: 0.55rem 1rem;
+  background: var(--accent);
+  color: var(--background);
+  border: 1px solid var(--accent);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bubble-submit:hover:not(:disabled) {
+  background: transparent;
+  color: var(--accent);
+}
+
+.bubble-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bubble-error {
+  font-size: 0.78rem;
+  color: #ff6b6b;
+  margin-top: 0.5rem;
+  line-height: 1.4;
+}
+
+.bubble-success {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Footer ── */
+.bubble-footer {
+  padding: 0.7rem 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  opacity: 0.5;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .bubble-trigger {
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 0.72rem;
+    padding: 0.5rem 0.9rem;
+  }
+
+  .bubble-panel {
+    bottom: 4rem;
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+  }
+}
