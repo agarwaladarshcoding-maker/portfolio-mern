@@ -12,44 +12,33 @@ import "@/components/StartupBubble.css";
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-heading",
-  weight: ["400", "600", "700", "900"],
+  weight: ["400", "700", "900"],
+  display: 'swap',
 });
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-body",
+  display: 'swap',
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  display: 'swap',
 });
 
+// Stricter metadata for Next 16 / React 19
 export const metadata: Metadata = {
-  title: "Adarsh Agarwala | Terminal meets Editorial",
-  description: "I code anything. I figure out everything else. Quant, ML, and scalable architecture engineer.",
-  openGraph: {
-    type: "website",
-    url: "https://adarshagarwala.com",
-    title: "Adarsh Agarwala | Quant & Systems Engineer",
-    description: "I code anything. I figure out everything else.",
-    siteName: "Adarsh Agarwala - Portfolio",
-    images: [{
-      url: "https://adarshagarwala.com/og-image.png",
-    }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Adarsh Agarwala | Professional",
-    description: "Quant & ML engineer. I figure out everything else.",
-  }
+  title: "Adarsh Agarwala",
+  description: "Systems engineer & quant developer.",
 };
 
 export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   const cookieStore = await cookies();
   const hasSeenBoot = cookieStore.get('hasSeenBootV2')?.value === 'true';
   const isMaintenance = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
