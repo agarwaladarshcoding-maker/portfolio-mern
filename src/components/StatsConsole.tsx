@@ -1,6 +1,7 @@
 import React from "react";
 import "./Console.css";
 import { GithubGraph } from "./GithubGraph";
+import { siteConfig } from "@/config/site";
 
 /**
  * Fetch caching definition.
@@ -106,7 +107,7 @@ export async function StatsConsole() {
         <div className="console-section" style={{ marginBottom: "2rem" }}>
           <div className="console-label">&gt; GitHub.getContributionStats()</div>
           <div className="console-row" style={{ marginBottom: "0.5rem" }}>
-            <div>Username: <a href="https://github.com/adarshagarwala" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}><span className="highlight">@adarshagarwala</span></a></div>
+            <div>Username: <a href={siteConfig.socials.github} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}><span className="highlight">{siteConfig.socials.githubHandle}</span></a></div>
             <div>Core Focus: <span className="highlight">C++, Python, React</span></div>
           </div>
           <div className="heat-map-container" style={{ display: 'block' }}>
@@ -120,7 +121,7 @@ export async function StatsConsole() {
             
             <div className="stat-card" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
               <span className="stat-plat">LeetCode</span>
-              <span className="stat-user"><a href="https://leetcode.com/AdarshAgarwala" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>@AdarshAgarwala</a></span>
+              <span className="stat-user"><a href={siteConfig.socials.leetcode} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>{siteConfig.socials.leetcodeHandle}</a></span>
               <span className="stat-val highlight">{lcTotal} Solved</span>
               <span className="stat-rank">{lcRank} Global</span>
               
@@ -132,7 +133,7 @@ export async function StatsConsole() {
 
             <div className="stat-card" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
               <span className="stat-plat">Codeforces</span>
-              <span className="stat-user"><a href="https://codeforces.com/profile/AdarshAg" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>@AdarshAg</a></span>
+              <span className="stat-user"><a href={siteConfig.socials.codeforces} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>{siteConfig.socials.codeforcesHandle}</a></span>
               <span className="stat-val highlight">Rating: {cfRating}</span>
               <span className="stat-rank">{cfRank}</span>
               

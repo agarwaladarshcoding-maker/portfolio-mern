@@ -1,169 +1,145 @@
-import { PROJECTS, getProjectBySlug } from "@/lib/projects";
-import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { getProjectBySlug, projects } from "@/constants/siteData";
 import Link from "next/link";
-import "@/components/Grind.css";
-import "./project-page.css";
+import { notFound } from "next/navigation";
 
-// ── GitHub SVG icon (reused in two places) ──────────────────────────────────
-const GithubIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={{ marginRight: "0.5rem", flexShrink: 0 }}>
-    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12" />
-  </svg>
-);
-
-// ── Static params for build-time generation ──────────────────────────────────
-export async function generateStaticParams() {
-  return PROJECTS.map((p) => ({ slug: p.slug }));
+// Generate static params for all projects at build time
+export function generateStaticParams() {
+  return projects.map((p) => ({ slug: p.slug }));
 }
 
-// ── Metadata — params MUST be awaited in Next.js 15/16 ──────────────────────
+// Generate dynamic metadata
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
-  if (!project) return { title: "Not Found" };
+  if (!project) return { title: "Project Not Found" };
   return {
     title: `${project.title} | Adarsh Agarwala`,
-    description: project.tagline,
-    openGraph: { title: project.title, description: project.tagline },
+    description: project.short_description,
   };
 }
 
-// ── Page component ────────────────────────────────────────────────────────────
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) notFound();
 
   return (
-    <article className="project-page">
+    <div className="min-h-screen w-full bg-[#0B0C10] text-white relative overflow-y-auto overflow-x-hidden">
+      <div className="bg-circuit-grid opacity-20 pointer-events-none fixed inset-0" />
+      {/* Top Command Bar */}
+      <div className="sticky top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 bg-[#0B0C10]/80 backdrop-blur-md border-b border-[#FACC15]/5">
+        {/* Left: Abort */}
+        <Link
+          href="/#projects"
+          className="flex items-center gap-2 font-mono text-xs text-[#FACC15] border border-[#FACC15]/40 px-4 py-2 rounded-full hover:bg-[#FACC15] hover:text-black transition-colors duration-150"
+        >
+          ← ABORT_AND_RETURN
+        </Link>
 
-      {/* ── Back navigation ── */}
-      <Link href="/" className="font-data back-link">
-        &lt; RETURN_INDEX()
-      </Link>
-
-      {/* ══════════════════════════════════════════
-          HERO HEADER
-          ══════════════════════════════════════════ */}
-      <header className="project-header">
-
-        {/* Tags row */}
-        <div className="project-meta font-data">
-          <span className="terminal-pill">{project.lang}</span>
-          {project.tags.map((t) => (
-            <span key={t} className="tech-badge">{t}</span>
-          ))}
-        </div>
-
-        <h1 className="project-title font-heading">{project.title}</h1>
-        <p className="project-tagline font-body">{project.tagline}</p>
-
-        {/* Top GitHub CTA */}
-        <div className="project-cta">
+        {/* Right: GitHub */}
+        {project.github_url && (
           <a
-            href={project.github}
+            href={project.github_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-github font-data"
+            className="flex items-center gap-2 font-mono text-xs text-black bg-[#FACC15] border border-[#FACC15] px-4 py-2 rounded-full hover:bg-transparent hover:text-[#FACC15] transition-colors duration-150 uppercase tracking-widest font-bold"
           >
-            <GithubIcon /> VIEW_ON_GITHUB()
+            [ VIEW_ON_GITHUB ] ↗
           </a>
-        </div>
-      </header>
-
-      {/* ══════════════════════════════════════════
-          OBJECTIVE
-          ══════════════════════════════════════════ */}
-      <section className="project-section">
-        <h2 className="project-section-title font-heading">
-          <span className="section-prefix font-data">&gt; </span>Objective
-        </h2>
-        <div className="abstract-block">
-          <p className="abstract-text font-body">{project.objective}</p>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          ARCHITECTURE / DESCRIPTION
-          ══════════════════════════════════════════ */}
-      <section className="project-section">
-        <h2 className="project-section-title font-heading">
-          <span className="section-prefix font-data">&gt; </span>Architecture
-        </h2>
-        <div className="markdown-render">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {project.architecture}
-          </ReactMarkdown>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          TECH STACK TABLE
-          ══════════════════════════════════════════ */}
-      <section className="project-section">
-        <h2 className="project-section-title font-heading">
-          <span className="section-prefix font-data">&gt; </span>Tech Stack
-        </h2>
-        <div className="spec-table font-data">
-          {project.techStack.map((item) => (
-            <div key={item.label} className="spec-row">
-              <span className="spec-label">{item.label}</span>
-              <span className="spec-value">{item.value}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          PERFORMANCE METRICS GRID
-          ══════════════════════════════════════════ */}
-      <section className="project-section">
-        <h2 className="project-section-title font-heading">
-          <span className="section-prefix font-data">&gt; </span>Performance Metrics
-        </h2>
-        <div className="metrics-grid">
-          {project.performance.map((item) => (
-            <div key={item.label} className="metric-card">
-              <div className="metric-value font-data">{item.value}</div>
-              <div className="metric-label font-body">{item.label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          ENGINEERING CHALLENGES
-          ══════════════════════════════════════════ */}
-      <section className="project-section">
-        <h2 className="project-section-title font-heading">
-          <span className="section-prefix font-data">&gt; </span>Engineering Challenges
-        </h2>
-        <div className="markdown-render">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {project.challenges}
-          </ReactMarkdown>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          BOTTOM CTA
-          ══════════════════════════════════════════ */}
-      <div className="project-bottom-cta">
-        <a
-          href={project.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-github font-data"
-        >
-          <GithubIcon /> VIEW_ON_GITHUB()
-        </a>
-        <Link href="/" className="btn-archive font-data">
-          &lt; BACK_TO_INDEX()
-        </Link>
+        )}
       </div>
 
-    </article>
+      {/* Content */}
+      <div className="max-w-3xl mx-auto px-6 md:px-8 pt-16 md:pt-24 pb-20 md:pb-32">
+        {/* Header */}
+        <div className="mb-12 border-b border-[#FACC15]/20 pb-8">
+          <p className="font-mono text-xs text-[#FACC15]/60 mb-2">
+            ID: {project.display_id} /{" "}
+            <span className={project.status === "ACTIVE" ? "text-green-400" : "text-red-400"}>
+              {project.status}
+            </span>
+          </p>
+          <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-white leading-tight mb-4">
+            {project.title}
+          </h1>
+          {/* Stack Tags */}
+          <div className="flex flex-wrap gap-2 mt-4">
+            {project.stack.map((tech) => (
+              <span
+                key={tech}
+                className="font-mono text-xs text-[#FACC15] border border-[#FACC15]/40 px-3 py-1 bg-[#FACC15]/5"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Abstract / Short Description */}
+        <div className="mb-12 border-l-2 border-[#FACC15] pl-6">
+          <p className="font-mono text-xs uppercase text-[#FACC15]/60 mb-2 tracking-widest">
+            ABSTRACT
+          </p>
+          <p className="text-lg text-[#F2F2F2]/90 leading-relaxed">
+            {project.short_description}
+          </p>
+        </div>
+
+        {/* Full Description */}
+        <section className="mb-12">
+          <h2 className="font-mono text-xs uppercase text-[#FACC15]/60 tracking-widest mb-4">
+            // SYSTEM_OVERVIEW
+          </h2>
+          <p className="text-base text-[#F2F2F2]/80 leading-relaxed">
+            {project.detailed_description}
+          </p>
+        </section>
+
+        {/* Key Highlights */}
+        <section className="mb-12">
+          <h2 className="font-mono text-xs uppercase text-[#FACC15]/60 tracking-widest mb-4">
+            // KEY_HIGHLIGHTS
+          </h2>
+          <ul className="space-y-3">
+            {project.key_highlights.map((highlight, i) => (
+              <li key={i} className="flex gap-3 font-mono text-sm text-[#F2F2F2]/80">
+                <span className="text-[#FACC15] shrink-0 mt-0.5">▸</span>
+                <span>{highlight}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* What It Proves */}
+        <section className="mb-12 bg-[#FACC15]/5 border border-[#FACC15]/20 p-6">
+          <h2 className="font-mono text-xs uppercase text-[#FACC15]/60 tracking-widest mb-3">
+            // SIGNAL_TO_RECRUITER
+          </h2>
+          <p className="text-sm text-[#F2F2F2]/80 leading-relaxed">
+            {project.what_it_proves}
+          </p>
+        </section>
+
+        {/* Action Buttons */}
+        <div className="flex gap-4 flex-wrap">
+          {project.github_url && (
+            <a
+              href={project.github_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-sm text-[#FACC15] border-2 border-[#FACC15] px-6 py-3 hover:bg-[#FACC15] hover:text-black transition-none"
+            >
+              [ GITHUB ]
+            </a>
+          )}
+          <Link
+            href="/#projects"
+            className="font-mono text-sm text-white/60 border-2 border-white/20 px-6 py-3 hover:border-white/60 transition-none"
+          >
+            [ ← BACK_TO_LEDGER ]
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }

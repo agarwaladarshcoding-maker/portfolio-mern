@@ -6,13 +6,14 @@ import connectDB from "@/lib/db";
 import Grind from "@/models/Grind";
 import Now from "@/models/Now";
 import Subscriber from "@/models/Subscriber";
+import Project from "@/models/Project";
 import { Resend } from "resend";
 
 const getResend = () => new Resend(process.env.RESEND_API_KEY || "dummy_key");
 
 
 // Extreme zero-trust master password environment var.
-const ADMIN_SECRET = process.env.ADMIN_SECRET || "quant_god"; 
+const ADMIN_SECRET = process.env.ADMIN_SECRET || "quant_god";
 
 export async function loginAdmin(formData: FormData) {
   const password = formData.get("password") as string;
@@ -42,7 +43,7 @@ export async function submitGrindPost(formData: FormData) {
   const dayCount = parseInt(formData.get("dayCount") as string, 10);
   const tagsString = (formData.get("tags") as string) || "";
   const body = formData.get("body") as string;
-  
+
   const tags = tagsString.split(",").map((t) => t.trim()).filter((t) => t.length > 0);
   const slug = `day-${dayCount}`;
 
@@ -157,6 +158,32 @@ ${message}
   } catch (err: any) {
     console.error("Broadcast failed:", err);
     throw new Error("Mass mail failed: " + err.message);
+  }
+
+  redirect("/admin");
+}
+
+export async function updateProjectSettings(formData: FormData) {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("admin_session")?.value;
+  if (session !== "authenticated") throw new Error("Unauthorized");
+
+  await connectDB();
+
+  const slug = formData.get("slug") as string;
+  const hasGithubLink = formData.get("hasGithubLink") === "on";
+  const githubUrl = formData.get("githubUrl") as string;
+
+  if (!slug) throw new Error("Missing project slug");
+
+  try {
+    await Project.findOneAndUpdate(
+      { slug },
+      { hasGithubLink, githubUrl },
+      { upsert: true, new: true }
+    );
+  } catch (error: any) {
+    throw new Error(error.message);
   }
 
   redirect("/admin");

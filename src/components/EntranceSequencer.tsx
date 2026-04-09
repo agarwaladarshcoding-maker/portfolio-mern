@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-/**
- * Boot messages simulating an HFT kernel boot sequence.
- * Chosen for density and speed — each line appears in rapid succession.
- */
 const MESSAGES = [
   "[BOOT]   Loading kernel core...                        OK",
   "[MEM]    Initializing RAII memory pools...             DONE",
@@ -19,104 +16,112 @@ const MESSAGES = [
 
 /**
  * EntranceSequencer
- *
- * - Fixed to viewport, pure black, z-index 99999
- * - Fires immediately on mount with no delay
- * - All messages render in ~1.2s total (150ms interval × 8 messages)
- * - Fades out over 400ms then unmounts
- * - Sets cookie so it only runs once per session
+ * 
+ * Rebuilt with Framer Motion for the "Linear x Bloomberg" design overhaul.
+ * Features rapid, variable-speed terminal logging and a smooth slide-up exit.
  */
 export function EntranceSequencer() {
   const [lines, setLines] = useState<string[]>([]);
-  // We start 'idle' to prevent hydration mismatches, then switch to 'running' or 'done' immediately on mount.
-  const [phase, setPhase] = useState<"idle" | "running" | "fading" | "done">("idle");
-  const startedRef = useRef(false);
+  const [isComplete, setIsComplete] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
-    if (startedRef.current) return;
-    startedRef.current = true;
-
-    // Check if they've already seen it this session
-    if (document.cookie.includes("hasSeenBootV2=true")) {
-      setPhase("done");
+    setHasMounted(true);
+    
+    // Skip if already seen this session
+    if (typeof document !== 'undefined' && document.cookie.includes("hasSeenBootV3=true")) {
+      setIsComplete(true);
       return;
     }
 
-    // Mark session
-    document.cookie = "hasSeenBootV2=true; path=/; max-age=86400;";
-    setPhase("running");
+    // Set session cookie
+    document.cookie = "hasSeenBootV3=true; path=/; max-age=86400;";
 
-    let index = 0;
-    const INTERVAL = 130;
-
-    const tick = () => {
-      if (index < MESSAGES.length) {
-        setLines((prev) => [...prev, MESSAGES[index]]);
-        index++;
-        timer = window.setTimeout(tick, INTERVAL);
+    let currentLine = 0;
+    
+    const showNextLine = () => {
+      if (currentLine < MESSAGES.length) {
+        setLines(prev => [...prev, MESSAGES[currentLine]]);
+        currentLine++;
+        
+        // Variable rapid speed for authentic terminal feel
+        const nextInterval = Math.random() * 80 + 30; // 30ms to 110ms
+        setTimeout(showNextLine, nextInterval);
       } else {
-        window.setTimeout(() => setPhase("fading"), 300);
-        window.setTimeout(() => setPhase("done"), 750);
+        // Hold for 1.5s then trigger exit
+        setTimeout(() => {
+          setIsComplete(true);
+        }, 1500);
       }
     };
 
-    let timer = window.setTimeout(tick, 50);
+    const initialDelay = setTimeout(showNextLine, 200);
 
-    return () => window.clearTimeout(timer);
+    return () => clearTimeout(initialDelay);
   }, []);
 
-  if (phase === "done" || phase === "idle") return null;
+  if (!hasMounted) return null;
 
   return (
-    <div
-      aria-hidden="true"
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 99999,
-        backgroundColor: "#000000",
-        color: "#C5A059",           // --accent (dark mode copper)
-        fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
-        fontSize: "clamp(0.7rem, 1.5vw, 0.9rem)",
-        lineHeight: 1.8,
-        padding: "clamp(1.5rem, 4vw, 3rem)",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        overflow: "hidden",
-        pointerEvents: "none",
-        // Fade transition
-        opacity: phase === "fading" ? 0 : 1,
-        transition: phase === "fading" ? "opacity 0.4s ease-out" : "none",
-        willChange: "opacity",
-      }}
-    >
-      {/* Optional dim header line */}
-      <div style={{ opacity: 0.35, marginBottom: "1.5rem", fontSize: "0.75em", letterSpacing: "0.1em" }}>
-        ADARSH-SYS v1.0 — BOOT SEQUENCE
-      </div>
-
-      {/* Lines appear one-by-one */}
-      {lines.map((line, i) => (
-        <div
-          key={i}
+    <AnimatePresence>
+      {!isComplete && (
+        <motion.div
+          key="boot-sequencer"
+          initial={{ y: 0 }}
+          exit={{ 
+            y: "-100%",
+            transition: { duration: 0.8, ease: [0.65, 0, 0.35, 1] } 
+          }}
           style={{
-            whiteSpace: "pre",
-            color: line.includes("[BOOT]") || line.includes("[STATUS]") || line.includes("[SYS]")
-              ? "#C5A059"     // accent for key milestones
-              : "rgba(242,242,242,0.75)", // muted white for detail lines
+            position: "fixed",
+            inset: 0,
+            zIndex: 99999,
+            backgroundColor: "#000000",
+            color: "var(--accent)",
+            fontFamily: "var(--font-mono)",
+            fontSize: "clamp(0.7rem, 1.5vw, 0.9rem)",
+            lineHeight: 1.8,
+            padding: "clamp(1.5rem, 4vw, 3rem)",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            overflow: "hidden",
+            pointerEvents: "none",
           }}
         >
-          {line}
-        </div>
-      ))}
+          <div style={{ opacity: 0.35, marginBottom: "1.5rem", fontSize: "0.75em", letterSpacing: "0.1em" }}>
+            ADARSH-SYS v2.0 — HFT KERNEL LOADED
+          </div>
 
-      {/* Blinking cursor at the end */}
-      {phase === "running" && (
-        <div style={{ marginTop: "0.25rem", animation: "blink-animation 1s step-end infinite", color: "#C5A059" }}>
-          _
-        </div>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {lines.map((line, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -5 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.05 }}
+                style={{
+                  whiteSpace: "pre",
+                  color: line.includes("[BOOT]") || line.includes("[STATUS]") || line.includes("[SYS]")
+                    ? "var(--accent)"
+                    : "rgba(242,242,242,0.7)",
+                }}
+              >
+                {line}
+              </motion.div>
+            ))}
+            
+            {/* Blinking cursor */}
+            <motion.div
+              animate={{ opacity: [1, 0] }}
+              transition={{ repeat: Infinity, duration: 0.8, ease: "linear", times: [0.5, 0.5] }}
+              style={{ color: "var(--accent)", marginTop: "0.2rem" }}
+            >
+              _
+            </motion.div>
+          </div>
+        </motion.div>
       )}
-    </div>
+    </AnimatePresence>
   );
 }

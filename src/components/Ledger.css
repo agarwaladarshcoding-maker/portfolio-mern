@@ -1,20 +1,21 @@
 .ledger-container {
   width: 100%;
-  margin: 2rem 0;
-  border: 1px solid var(--border);
-  border-radius: 4px;
+  margin: 3rem 0;
+  border: 4px solid var(--foreground);
+  border-radius: 0px;
   overflow: hidden;
   font-size: 0.9rem;
 }
 
 .ledger-header {
   display: flex;
-  background-color: var(--border);
-  padding: 0.5rem 1rem;
+  background-color: var(--foreground);
+  color: var(--background);
+  padding: 0.75rem 1rem;
   font-size: 0.75rem;
+  font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  opacity: 0.8;
 }
 
 .ledger-body {
@@ -27,8 +28,8 @@
   display: block;
   text-decoration: none;
   color: inherit;
-  border-bottom: 1px solid var(--border);
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  border-bottom: 3px solid var(--foreground);
+  transition: all 0.1s steps(2);
 }
 
 .ledger-row-link:last-child {
@@ -36,14 +37,18 @@
 }
 
 .ledger-row-link:hover {
-  background-color: color-mix(in srgb, var(--accent) 5%, var(--background));
-  border-color: var(--accent);
-  color: inherit;
+  background-color: var(--accent);
+  color: var(--background);
+}
+
+.ledger-row-link:hover .row-title {
+  color: var(--background);
 }
 
 .ledger-row-link:hover .col-arrow {
-  color: var(--accent);
-  transform: translateX(4px);
+  color: var(--accent-red);
+  transform: translateX(8px) scale(1.5);
+  opacity: 1;
 }
 
 .ledger-row {

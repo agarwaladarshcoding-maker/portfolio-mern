@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { siteConfig } from "@/config/site";
 
 /**
  * MaintenanceScreen
@@ -70,7 +71,7 @@ export function MaintenanceScreen() {
         ESTIMATED_Uptime: T-MINUS_SOON
       </div>
 
-      <a href="https://linkedin.com/in/adarshagarwala" target="_blank" rel="noopener" style={{
+      <a href={siteConfig.socials.linkedin} target="_blank" rel="noopener" style={{
         marginTop: "3rem",
         color: "var(--accent, #C5A059)",
         textDecoration: "none",

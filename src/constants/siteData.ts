@@ -9,6 +9,25 @@ export type Project = {
   key_highlights: string[];
   github_url?: string;
   status: "ACTIVE" | "ARCHIVED" | "STEALTH";
+  priority: number;
+};
+
+export type BlogEntry = {
+  id: string;
+  day: number;
+  title: string;
+  topics: string[];
+};
+
+export type SkillPanel = {
+  title: string;
+  description: string;
+  tags: { icon: string; label: string }[];
+};
+
+export type NavItem = {
+  name: string;
+  href: string;
 };
 
 export const projects: Project[] = [
@@ -30,8 +49,9 @@ export const projects: Project[] = [
       "Full vectorized backtesting pipeline with no look-ahead bias",
       "Parameterized for any two correlated equity symbols",
     ],
-    github_url: "https://github.com/agarwaladarshcoding/pairs-trading-strategy",
+    github_url: "https://github.com/agarwaladarshcoding-maker/Project-Section/tree/main/Quant-Finance-Project/Mean%20Reverting%20Pairs",
     status: "ACTIVE",
+    priority: 1,
   },
   {
     slug: "hf-order-matching-engine",
@@ -53,6 +73,7 @@ export const projects: Project[] = [
     ],
     github_url: "https://github.com/agarwaladarshcoding/hf-order-matching-engine",
     status: "ACTIVE",
+    priority: 2,
   },
   {
     slug: "monte-carlo-option-pricer",
@@ -72,8 +93,9 @@ export const projects: Project[] = [
       "Risk-neutral valuation under Black-Scholes assumptions",
       "Python binding for seamless research workflow integration",
     ],
-    github_url: "https://github.com/agarwaladarshcoding/monte-carlo-option-pricer",
+    github_url: "https://github.com/agarwaladarshcoding-maker/Project-Section/tree/main/Quant-Finance-Project/Monte-Carlo",
     status: "ACTIVE",
+    priority: 3,
   },
   {
     slug: "pca-factor-model",
@@ -93,8 +115,9 @@ export const projects: Project[] = [
       "Factor loading visualization and scree plot generation",
       "Used for portfolio risk decomposition and factor attribution",
     ],
-    github_url: "https://github.com/agarwaladarshcoding/pca-factor-model",
+    github_url: "https://github.com/agarwaladarshcoding-maker/Project-Section/tree/main/Quant-Finance-Project/portfolio-manger-v2",
     status: "ACTIVE",
+    priority: 4,
   },
   {
     slug: "algorithmic-portfolio-analyser",
@@ -114,8 +137,9 @@ export const projects: Project[] = [
       "Markowitz Efficient Frontier optimization",
       "Full portfolio risk report with drawdown and VaR metrics",
     ],
-    github_url: "https://github.com/agarwaladarshcoding/algorithmic-portfolio-analyser",
+    github_url: "https://github.com/agarwaladarshcoding-maker/Project-Section/tree/main/Quant-Finance-Project/Algo_Portfolio_Manager",
     status: "ACTIVE",
+    priority: 5,
   },
   {
     slug: "portfolio-website",
@@ -135,10 +159,107 @@ export const projects: Project[] = [
       "Floating macOS Dock navbar with glass-morphism backdrop-blur",
       "Animated isometric grid background on the Projects section",
     ],
-    github_url: "https://github.com/agarwaladarshcoding/portfolio-mern-v2",
+    github_url: "https://know-about-adarsh.vercel.app/",
     status: "ACTIVE",
+    priority: 6,
   },
 ];
+
+export const blogEntries: BlogEntry[] = [
+  {
+    id: "entry-01",
+    day: 1,
+    title: "Memory Arenas & Cache Locality",
+    topics: ["Systems Design", "Performance"],
+  },
+];
+
+export const skills: SkillPanel[] = [
+  {
+    title: "SYSTEMS & C++",
+    description: "Low-level memory management, lock-free data structures, and optimized hardware utilization.",
+    tags: [
+      { icon: "⚙️", label: "C++17/20" },
+      { icon: "🧠", label: "Memory Arenas" },
+      { icon: "⚡", label: "Multi-threading" },
+      { icon: "🌐", label: "TCP/IP" },
+      { icon: "📖", label: "Limit Order Books" },
+    ],
+  },
+  {
+    title: "QUANTITATIVE FINANCE",
+    description: "Statistical modeling, stochastic processes, and high-performance financial systems.",
+    tags: [
+      { icon: "📈", label: "Monte Carlo" },
+      { icon: "📊", label: "Black-Scholes" },
+      { icon: "📈", label: "Pairs Trading" },
+      { icon: "📊", label: "Statistical Arbitrage" },
+      { icon: "📊", label: "Backtesting" },
+    ],
+  },
+  {
+    title: "PYTHON & DATA SCIENCE",
+    description: "Vectorized computation, data pipelines, and machine learning models.",
+    tags: [
+      { icon: "🐼", label: "Pandas" },
+      { icon: "🔢", label: "NumPy" },
+      { icon: "⚙️", label: "Scikit-learn" },
+      { icon: "🔥", label: "PyTorch" },
+      { icon: "⚡", label: "FastAPI" },
+    ],
+  },
+  {
+    title: "MATHEMATICS",
+    description: "Core analytical foundation for quantitative strategies and systems.",
+    tags: [
+      { icon: "📐", label: "Linear Algebra" },
+      { icon: "🎲", label: "Probability Theory" },
+      { icon: "📈", label: "Stochastic Calculus" },
+      { icon: "🎯", label: "Optimization" },
+    ],
+  },
+  {
+    title: "FULL-STACK WEB",
+    description: "Building resilient, high-fidelity interfaces and distributed backend services.",
+    tags: [
+      { icon: "▲", label: "Next.js" },
+      { icon: "⚛️", label: "React" },
+      { icon: "◇", label: "TypeScript" },
+      { icon: "🎨", label: "Tailwind CSS" },
+      { icon: "🍃", label: "MongoDB" },
+      { icon: "🟢", label: "Node.js" },
+    ],
+  },
+];
+
+export const navItems: NavItem[] = [
+  { name: "Index", href: "#hero" },
+  { name: "About", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Projects", href: "#projects" },
+  { name: "Logs", href: "#blog" },
+  { name: "Contact", href: "#contact" },
+];
+
+export const coordinates = [
+  { label: "GITHUB", value: "github.com/agarwaladarshcoding-maker", href: "https://github.com/agarwaladarshcoding-maker" },
+  { label: "LINKEDIN", value: "linkedin.com/in/adarsh-agarwala", href: "https://linkedin.com/in/adarsh-agarwala" },
+  { label: "EMAIL", value: "agarwalaadarsh.work@gmail.com", href: "mailto:agarwalaadarsh.work@gmail.com" },
+  { label: "LOCATION", value: "IIIT_PUNE, INDIA", href: "#" },
+  { label: "EDUCATION", value: "IIIT PUNE (2025-2029)", href: "#" },
+  { label: "GPA", value: "9.16", href: "#" },
+  { label: "JEE_MAIN", value: "99th Percentile", href: "#" },
+];
+
+export const aboutStatus = {
+  intro: "Quant researcher & systems engineer. Architecting low-latency trading infrastructure and ML models.",
+  corePhilosophy: "First principles only. Deconstruct every system to its mathematical or physical substrate. Trust the architecture, verify the execution.",
+  operations: [
+    { label: "VENTURE", value: "Core engine architect at a highly technical stealth startup." },
+    { label: "BROADCAST", value: "Sharing daily engineering logs and system design insights on LinkedIn." },
+    { label: "ALGORITHMS", value: "Active competitive programming grind and continuous Codeforces streak." },
+  ]
+};
 
 export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);

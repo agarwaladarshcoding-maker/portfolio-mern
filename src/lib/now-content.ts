@@ -12,6 +12,8 @@ Designing a robust algorithmic execution engine and focusing on reducing latency
 
 Also working on a stealth startup — expect something in the intersection of AI infrastructure and quantitative tooling. Updates coming soon.
 
+Currently operating in a 'Research & Pre-print' phase for my core quant infrastructure projects. I am prioritizing robust architectural design and stochastic modeling before pushing code to public repositories. You can track my daily engineering progress in the Grind log.
+
 ## Learning
 
 * **Stochastic Calculus & Options Pricing** — Deriving Greeks for exotic options (barrier, Asian), calibrating Heston model parameters.

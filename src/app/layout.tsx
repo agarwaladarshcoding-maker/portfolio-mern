@@ -1,17 +1,27 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Inter, JetBrains_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { Navbar } from "@/components/Navbar";
-import { EntranceSequencer } from "@/components/EntranceSequencer";
+import { FloatingNav } from "@/components/FloatingNav";
+import { GatekeeperProvider } from "@/components/GatekeeperProvider";
+import { siteConfig } from "@/config/site";
 import { StartupBubble } from "@/components/StartupBubble";
 import { MaintenanceScreen } from "@/components/MaintenanceScreen";
+import { MobileHeader } from "@/components/MobileHeader";
+import { DiagnosticBootstrap } from "@/components/DiagnosticBootstrap";
 import "@/components/StartupBubble.css";
 
-const playfair = Playfair_Display({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-heading",
-  weight: ["400", "700", "900"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: 'swap',
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["400", "500", "600", "700", "800", "900"],
   display: 'swap',
 });
 
@@ -46,45 +56,23 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const isMaintenance = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
+  const isMaintenance = process.env.NEXT_PUBLIC_MAINTENANCE_MODE?.trim() === 'true';
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${playfair.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}>
+      <body className={`${spaceGrotesk.variable} ${montserrat.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}>
         <ThemeProvider>
           {isMaintenance ? (
             <MaintenanceScreen />
           ) : (
-            <>
-              <EntranceSequencer />
-              <StartupBubble />
-              <div className="container">
-                <Navbar />
-                <main>{children}</main>
-                <footer style={{ 
-                  marginTop: '5rem', 
-                  paddingTop: '2rem', 
-                  paddingBottom: '3rem', 
-                  borderTop: '1px solid var(--border)',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                  gap: '1rem'
-                }}>
-                  <div className="font-data" style={{ fontSize: '0.8rem', color: 'var(--fg-muted)' }}>
-                    &copy; {new Date().getFullYear()} Adarsh Agarwala. Systems engineer &amp; quant developer.<br/>
-                    <a href="/contact" style={{ color: 'var(--accent)', textDecoration: 'none', display: 'inline-block', marginTop: '0.5rem' }}>Let&apos;s connect &rarr;</a>
-                  </div>
-                  
-                  <div style={{ display: 'flex', gap: '1.5rem' }}>
-                    <a href="https://github.com/adarshagarwala" target="_blank" rel="noopener noreferrer" className="font-data" style={{ color: 'var(--fg-muted)', textDecoration: 'none', fontSize: '0.8rem' }}>GITHUB()</a>
-                    <a href="https://linkedin.com/in/adarshagarwala" target="_blank" rel="noopener noreferrer" className="font-data" style={{ color: 'var(--fg-muted)', textDecoration: 'none', fontSize: '0.8rem' }}>LINKEDIN()</a>
-                    <a href="https://codeforces.com/profile/AdarshAg" target="_blank" rel="noopener noreferrer" className="font-data" style={{ color: 'var(--fg-muted)', textDecoration: 'none', fontSize: '0.8rem' }}>CF()</a>
-                  </div>
-                </footer>
+            <GatekeeperProvider>
+              <div style={{ minHeight: '100vh', position: 'relative' }}>
+                <DiagnosticBootstrap />
+                <MobileHeader />
+                <main style={{ width: '100%' }}>{children}</main>
+                <FloatingNav />
               </div>
-            </>
+            </GatekeeperProvider>
           )}
         </ThemeProvider>
       </body>

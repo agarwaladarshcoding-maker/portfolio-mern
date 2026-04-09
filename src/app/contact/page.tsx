@@ -4,12 +4,15 @@ import React, { useState } from "react";
 import "./contact.css";
 import { sendContactEmail } from "./actions";
 
+import { siteConfig } from "@/config/site";
+
 const SOCIALS = [
-  { label: "GitHub", handle: "@adarshagarwala", url: "https://github.com/adarshagarwala" },
-  { label: "LinkedIn", handle: "in/adarshagarwala", url: "https://linkedin.com/in/adarshagarwala" },
-  { label: "LeetCode", handle: "@AdarshAgarwala", url: "https://leetcode.com/AdarshAgarwala" },
-  { label: "Codeforces", handle: "@AdarshAg", url: "https://codeforces.com/profile/AdarshAg" },
-  { label: "Email", handle: "agarwalaadarsh.work@gmail.com", url: "mailto:agarwalaadarsh.work@gmail.com" },
+  { label: "GitHub", handle: siteConfig.socials.githubHandle, url: siteConfig.socials.github },
+  { label: "LinkedIn", handle: siteConfig.socials.linkedinHandle, url: siteConfig.socials.linkedin },
+  { label: "LeetCode", handle: siteConfig.socials.leetcodeHandle, url: siteConfig.socials.leetcode },
+  { label: "Codeforces", handle: siteConfig.socials.codeforcesHandle, url: siteConfig.socials.codeforces },
+  { label: "Instagram", handle: siteConfig.socials.instagramHandle, url: siteConfig.socials.instagram },
+  { label: "Email", handle: siteConfig.email, url: `mailto:${siteConfig.email}` },
 ];
 
 /**
@@ -50,7 +53,7 @@ export default function ContactPage() {
       // ── FALLBACK ──────────────────────────────────────────────
       // If the email server is down, open the user's local mail client
       const body = `NAME: ${formData.name}\nEMAIL: ${formData.email}\n\n${formData.message}`;
-      window.location.href = `mailto:agarwalaadarsh.work@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = `mailto:${siteConfig.email}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(body)}`;
       setStatus("sent");
     }
   };
@@ -128,7 +131,7 @@ export default function ContactPage() {
                     onChange={handleChange}
                     required
                     placeholder="Adarsh Agarwala"
-                    style={{ width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid var(--border)', padding: '0.6rem 0', color: 'var(--foreground)', outline: 'none', fontFamily: 'var(--font-body)', fontSize: '1rem' }}
+                    style={{ width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid var(--border)', padding: '0.6rem 0', color: 'var(--foreground)', outline: 'none', fontFamily: 'var(--font-mono)', fontSize: '1rem' }}
                   />
                 </div>
 
@@ -141,7 +144,7 @@ export default function ContactPage() {
                     onChange={handleChange}
                     required
                     placeholder="you@domain.com"
-                    style={{ width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid var(--border)', padding: '0.6rem 0', color: 'var(--foreground)', outline: 'none', fontFamily: 'var(--font-body)', fontSize: '1rem' }}
+                    style={{ width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid var(--border)', padding: '0.6rem 0', color: 'var(--foreground)', outline: 'none', fontFamily: 'var(--font-mono)', fontSize: '1rem' }}
                   />
                 </div>
 
@@ -153,7 +156,7 @@ export default function ContactPage() {
                     onChange={handleChange}
                     required
                     placeholder="Inquiry / Quant / etc."
-                    style={{ width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid var(--border)', padding: '0.6rem 0', color: 'var(--foreground)', outline: 'none', fontFamily: 'var(--font-body)', fontSize: '1rem' }}
+                    style={{ width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid var(--border)', padding: '0.6rem 0', color: 'var(--foreground)', outline: 'none', fontFamily: 'var(--font-mono)', fontSize: '1rem' }}
                   />
                 </div>
 
@@ -166,7 +169,7 @@ export default function ContactPage() {
                     required
                     placeholder="Tell me what you're building..."
                     rows={5}
-                    style={{ width: '100%', background: 'transparent', border: '1px solid var(--border)', padding: '1rem', color: 'var(--foreground)', outline: 'none', fontFamily: 'var(--font-body)', fontSize: '1rem', resize: 'vertical', lineHeight: 1.5 }}
+                    style={{ width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid var(--border)', padding: '1rem 0', color: 'var(--foreground)', outline: 'none', fontFamily: 'var(--font-mono)', fontSize: '1rem', resize: 'vertical', lineHeight: 1.5 }}
                   />
                 </div>
 

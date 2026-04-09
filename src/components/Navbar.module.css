@@ -1,36 +1,14 @@
 .header {
-  padding: 1.5rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 3rem;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  width: 100%;
 }
 
 .nav {
   display: flex;
   gap: 2rem;
   align-items: center;
-}
-
-.themeToggle {
-  background: none;
-  border: none;
-  color: var(--foreground);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem;
-  border-radius: 50%;
-  transition: background-color 0.2s ease;
-  flex-shrink: 0;
-}
-
-.themeToggle:hover {
-  background-color: var(--border);
 }
 
 .navLinks {
@@ -50,10 +28,5 @@
 @media (max-width: 640px) {
   .navLinks {
     gap: 1rem;
-  }
-
-  .header {
-    padding: 1rem 0;
-    margin-bottom: 2rem;
   }
 }

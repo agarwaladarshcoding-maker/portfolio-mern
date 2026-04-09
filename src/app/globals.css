@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /* ═══════════════════════════════════════════════
    globals.css — Design System
    "Editorial Serif meets Trading Terminal"
@@ -5,27 +7,99 @@
 
 /* ── Design Tokens ── */
 :root {
-  --background: #F8F7F3;
-  --foreground: #1A1A1A;
-  --accent: #B87333;
-  --accent-muted: #C5A059;
-  --fg-muted: #7a7a7a;
-  --border: #E5E0D8;
-  --border-color: #E5E0D8;
-  --card-bg: rgba(255,255,255,0.4);
-  --noise-opacity: 0.04;
+  --background: #0B0C10; /* Deep Midnight */
+  --foreground: #F2F2F2;
+  --accent: #FACC15;    /* Cyber Gold */
+  --accent-red: #FF3131; /* Comic Red */
+  --fg-muted: #8892B0;
+  --border: #1F2833;
+  --border-color: #1F2833;
+  --card-bg: transparent;
+  --noise-opacity: 0.05;
 }
 
-[data-theme='dark'] {
-  --background: #0A0A0A;
-  --foreground: #F2F2F2;
-  --accent: #C5A059;
-  --accent-muted: #8A6D3B;
-  --fg-muted: #888888;
-  --border: #2A2A2A;
-  --border-color: #2A2A2A;
-  --card-bg: rgba(20,20,20,0.6);
-  --noise-opacity: 0.05;
+@theme {
+  --color-accent: #FACC15;
+  --color-midnight: #0B0C10;
+}
+
+/* ── Animated Isometric Grid (Projects Section) ── */
+@keyframes grid-pan-slow {
+  0%   { background-position: 0 0; }
+  100% { background-position: 80px 80px; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(200%) skewX(-15deg); }
+}
+
+.bg-circuit-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(250, 204, 21, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 204, 21, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: grid-pan-slow 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+  background-color: #0B0C10;
+}
+
+.bg-circuit-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(250, 204, 21, 0.03),
+    rgba(250, 204, 21, 0.08),
+    rgba(250, 204, 21, 0.03),
+    transparent
+  );
+  width: 50%;
+  height: 100%;
+  animation: shimmer 10s infinite linear;
+  filter: blur(40px);
+}
+
+.bg-grid-pan-black {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: grid-pan 8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes oscilloscope {
+  0%   { background-position: 0% 50%; opacity: 0.1; }
+  50%  { opacity: 0.3; }
+  100% { background-position: 200% 50%; opacity: 0.1; }
+}
+
+.bg-oscilloscope {
+  position: absolute;
+  bottom: 0; left: 0; width: 100%; height: 30vh;
+  background: repeating-linear-gradient(to right, transparent, rgba(250,204,21,0.05) 1px, rgba(250,204,21,0.2) 2px, transparent 3px);
+  background-size: 200% 100%;
+  animation: oscilloscope 4s linear infinite;
+  pointer-events: none;
+  mask-image: linear-gradient(to top, black, transparent);
+  -webkit-mask-image: linear-gradient(to top, black, transparent);
+}
+
+@keyframes scan {
+  0% { top: -20%; }
+  100% { top: 120%; }
+}
+
+.animate-scan {
+  animation: scan 3s linear infinite;
 }
 
 /* ── Reset & Base ── */
@@ -34,29 +108,67 @@
 }
 
 html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
-  margin: 0;
-  padding: 0;
   transition: background-color 0.3s ease, color 0.3s ease;
-  min-height: 100vh;
 }
 
-/* Grain Texture Overlay */
+/* ── Iron-Clat Lockdown (Applied only to Home Page) ── */
+.lock-viewport {
+  overflow: hidden !important;
+  height: 100vh;
+  height: 100dvh;
+  width: 100vw;
+  position: fixed;
+}
+
+/* ── Hide Scrollbars Utility ── */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── Custom Scrollbar (Terminal Style) ── */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(11, 12, 16, 0.5);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 0;
+  opacity: 0.3;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #fff;
+}
+
+/* Grain / Halftone Texture Overlay */
 body::before {
   content: "";
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
   pointer-events: none;
   z-index: 9999;
-  opacity: var(--noise-opacity);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.035; /* Subtle halftone dots */
+  background-image: radial-gradient(#FACC15 1px, transparent 0);
+  background-size: 15px 15px;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading), serif;
-  font-weight: 600;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
   margin-top: 0;
   margin-bottom: 1rem;
 }
@@ -79,6 +191,15 @@ a:hover { color: var(--accent); }
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 2rem;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+
+@media (max-width: 1100px) {
+  .container {
+    border-left: none;
+    border-right: none;
+  }
 }
 
 /* ── Pulsing Status Indicator ── */
@@ -115,6 +236,41 @@ a:hover { color: var(--accent); }
   animation: pulse-ring 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
+/* ── Project Status Badge ── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(184, 115, 51, 0.05);
+  border: 1px solid rgba(184, 115, 51, 0.2);
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+[data-theme='dark'] .status-badge {
+  background: rgba(197, 160, 89, 0.05);
+  border-color: rgba(197, 160, 89, 0.2);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: status-pulse 2s infinite ease-in-out;
+}
+
+@keyframes status-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
 /* ── Navbar / Buttons ── */
 .nav-link {
   display: flex;
@@ -129,20 +285,32 @@ a:hover { color: var(--accent); }
 .button-outline {
   display: inline-flex;
   align-items: center;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  border: 3px solid var(--accent);
+  border-radius: 0px;
   font-family: var(--font-mono), monospace;
   font-size: 0.85rem;
-  transition: all 0.2s ease;
+  font-weight: 800;
+  text-transform: uppercase;
+  transition: all 0.15s cubic-bezier(0.17, 0.67, 0.83, 0.67);
   background: transparent;
-  color: var(--foreground);
+  color: var(--accent);
   cursor: pointer;
   white-space: nowrap;
 }
 .button-outline:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  background-color: var(--accent);
+  color: var(--background);
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0px 0px var(--accent-red);
+}
+
+.comic-box {
+  border: 4px solid var(--foreground);
+  padding: 2rem;
+  background: var(--background);
+  box-shadow: 8px 8px 0px 0px var(--accent);
+  position: relative;
 }
 
 /* ── Typewriter blink ── */
@@ -155,6 +323,27 @@ a:hover { color: var(--accent); }
   display: inline-block;
   margin-left: 2px;
 }
+
+@keyframes terminal-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.pulse-cursor {
+  animation: terminal-pulse 0.8s infinite;
+  color: var(--accent);
+  font-weight: 900;
+}
+
+.comic-panel {
+  border: 4px solid var(--accent);
+  background: var(--background);
+  padding: 2rem;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.comic-border-b { border-bottom: 4px solid var(--accent); }
+.comic-border-r { border-right: 4px solid var(--accent); }
 
 /* ── Hero ── */
 .hero-title {
@@ -181,8 +370,8 @@ a:hover { color: var(--accent); }
   letter-spacing: 0.05em;
   padding: 0.4rem 0.8rem;
   border: 1px solid var(--border);
-  background: var(--background);
-  border-radius: 4px;
+  background: transparent;
+  border-radius: 0px;
   margin-bottom: 2rem;
   text-transform: uppercase;
 }
